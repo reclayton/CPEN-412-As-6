@@ -27,16 +27,16 @@ Begin
 -- (A8..1) thus each device occupies 512 bytes in the 68k’s space.
 --
 -- Using CanBusSelect_H signal above to reduce decoder expression/complexity, design the following
-	if CanBusSelect_H = '1' then
+	--if CanBusSelect_H = '1' then
 	-- TODO : enable Can0 if 68k is accessing an address in range $00500000 - $005001FF
-		if Address(9 downto 8) <= "01" then
+		if unsigned(Address) >= 16#00500000# and unsigned(Address) <= 16#005001FF# then
 			CAN_Enable0_H <= '1';
 		
 		-- TODO : enable Can1 if 68k is accessing an address in range $00500200 - $005003FF
-		elsif Address(9 downto 8) <= "11" and Address(9 downto 8) >= "10" then
+		elsif unsigned(Address) >= 16#00500200# and unsigned(Address) <= 16#005003FF# then
 			CAN_Enable1_H <= '1';
 		end if;
-	end if;
+	--end if;
 
 
 	
