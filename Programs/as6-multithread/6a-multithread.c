@@ -5,8 +5,11 @@
 *
 */
 #include <stdio.h>
-#include "Bios.h"
-#include "ucos_ii.h"
+#include <string.h>
+#include <ctype.h>
+#include <stdlib.h>
+#include <Bios.h>
+#include <ucos_ii.h>
 #define STACKSIZE 256
 /*
 ** Stacks for each task are allocated here in the application in this case = 256 bytes
@@ -34,9 +37,9 @@ void main(void)
 Init_RS232();
 Init_LCD();
 /* display welcome message on LCD display */
-//Oline0("Altera DE1/68K");
+//Oline0('c');
 //Oline1("Micrium uC/OS-II RTOS");
-//OSInit(); // call to initialise the OS
+OSInit(); // call to initialise the OS
 /*
 ** Now create the 4 child tasks and pass them no data.
 ** the smaller the numerical priority value, the higher the task priority
@@ -53,13 +56,21 @@ OSStart(); // call to start the OS scheduler, (never returns from this function)
 */
 void Task1(void *pdata)
 {
-	int HEX_COUNT = 0;
+	int LOWER_HEX_COUNT = 0;
+	int UPPER_HEX_COUNT = 0;
+	HEX_B = UPPER_HEX_COUNT;
+	HEX_A = LOWER_HEX_COUNT;
 for (;;) {
-
-	HEX_B = HEX_COUNT;
-	HEX_A = HEX_COUNT++;
+	if (LOWER_HEX_COUNT == 99) {
+		HEX_B = ++UPPER_HEX_COUNT;
+		LOWER_HEX_COUNT = 0;
+		HEX_A = LOWER_HEX_COUNT;
+	} else {
+		HEX_A = LOWER_HEX_COUNT++;
+	}
+	
 //printf("This is Task #1\n");
-OSTimeDly(40);
+OSTimeDly(50);
 }
 }
 /*
@@ -71,18 +82,17 @@ void Task2(void *pdata)
 // must start timer ticker here
 Timer1_Init() ; // this function is in BIOS.C and written by us to start timer
 for (;;) {
-	
 //printf("....This is Task #2\n");
 OSTimeDly(10);
 }
 }
 void Task3(void *pdata)
 {
-		int count = 0;
+	int LED_COUNT = 0;
 for (;;) {
-	PortA = count++;
 //printf("........This is Task #3\n");
-OSTimeDly(20);
+PortA = LED_COUNT++;
+OSTimeDly(10);
 }
 }
 void Task4(void *pdata)

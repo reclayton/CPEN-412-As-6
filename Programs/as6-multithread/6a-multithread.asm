@@ -6,8 +6,11 @@
 ; *
 ; */
 ; #include <stdio.h>
-; #include "Bios.h"
-; #include "ucos_ii.h"
+; #include <string.h>
+; #include <ctype.h>
+; #include <stdlib.h>
+; #include <Bios.h>
+; #include <ucos_ii.h>
 ; #define STACKSIZE 256
 ; /*
 ; ** Stacks for each task are allocated here in the application in this case = 256 bytes
@@ -42,9 +45,10 @@ _main:
 ; Init_LCD();
        jsr       _Init_LCD
 ; /* display welcome message on LCD display */
-; //Oline0("Altera DE1/68K");
+; //Oline0('c');
 ; //Oline1("Micrium uC/OS-II RTOS");
-; //OSInit(); // call to initialise the OS
+; OSInit(); // call to initialise the OS
+       jsr       _OSInit
 ; /*
 ; ** Now create the 4 child tasks and pass them no data.
 ; ** the smaller the numerical priority value, the higher the task priority
@@ -99,20 +103,42 @@ _main:
        xdef      _Task1
 _Task1:
        link      A6,#0
-       move.l    D2,-(A7)
-; int HEX_COUNT = 0;
+       movem.l   D2/D3,-(A7)
+; int LOWER_HEX_COUNT = 0;
        clr.l     D2
+; int UPPER_HEX_COUNT = 0;
+       clr.l     D3
+; HEX_B = UPPER_HEX_COUNT;
+       move.b    D3,4194322
+; HEX_A = LOWER_HEX_COUNT;
+       move.b    D2,4194320
 ; for (;;) {
 Task1_1:
-; HEX_B = HEX_COUNT;
-       move.b    D2,4194322
-; HEX_A = HEX_COUNT++;
+; if (LOWER_HEX_COUNT == 99) {
+       cmp.l     #99,D2
+       bne.s     Task1_4
+; HEX_B = ++UPPER_HEX_COUNT;
+       addq.l    #1,D3
+       move.b    D3,4194322
+; LOWER_HEX_COUNT = 0;
+       clr.l     D2
+; HEX_A = LOWER_HEX_COUNT;
+       move.b    D2,4194320
+       bra.s     Task1_5
+Task1_4:
+; } else {
+; HEX_A = LOWER_HEX_COUNT++;
        move.l    D2,D0
        addq.l    #1,D2
        move.b    D0,4194320
-; //printf("This is Task #1\n");
-; OSTimeDly(40);
-       pea       40
+Task1_5:
+; }
+; printf("This is Task #1\n");
+       pea       @6a-mul~1_1.L
+       jsr       _printf
+       addq.w    #4,A7
+; OSTimeDly(50);
+       pea       50
        jsr       _OSTimeDly
        addq.w    #4,A7
        bra       Task1_1
@@ -132,7 +158,10 @@ _Task2:
        jsr       _Timer1_Init
 ; for (;;) {
 Task2_1:
-; //printf("....This is Task #2\n");
+; printf("....This is Task #2\n");
+       pea       @6a-mul~1_2.L
+       jsr       _printf
+       addq.w    #4,A7
 ; OSTimeDly(10);
        pea       10
        jsr       _OSTimeDly
@@ -145,17 +174,20 @@ Task2_1:
        xdef      _Task3
 _Task3:
        link      A6,#-4
-; int count = 0;
+; int LED_COUNT = 0;
        clr.l     -4(A6)
 ; for (;;) {
 Task3_1:
-; PortA = count++;
+; printf("........This is Task #3\n");
+       pea       @6a-mul~1_3.L
+       jsr       _printf
+       addq.w    #4,A7
+; PortA = LED_COUNT++;
        move.l    -4(A6),D0
        addq.l    #1,-4(A6)
        move.b    D0,4194304
-; //printf("........This is Task #3\n");
-; OSTimeDly(20);
-       pea       20
+; OSTimeDly(10);
+       pea       10
        jsr       _OSTimeDly
        addq.w    #4,A7
        bra       Task3_1
@@ -168,7 +200,10 @@ _Task4:
        link      A6,#0
 ; for (;;) {
 Task4_1:
-; //printf("............This is Task #4\n");
+; printf("............This is Task #4\n");
+       pea       @6a-mul~1_4.L
+       jsr       _printf
+       addq.w    #4,A7
 ; OSTimeDly(50);
        pea       50
        jsr       _OSTimeDly
@@ -176,6 +211,20 @@ Task4_1:
        bra       Task4_1
 ; }
 ; }
+       section   const
+@6a-mul~1_1:
+       dc.b      84,104,105,115,32,105,115,32,84,97,115,107,32
+       dc.b      35,49,10,0
+@6a-mul~1_2:
+       dc.b      46,46,46,46,84,104,105,115,32,105,115,32,84
+       dc.b      97,115,107,32,35,50,10,0
+@6a-mul~1_3:
+       dc.b      46,46,46,46,46,46,46,46,84,104,105,115,32,105
+       dc.b      115,32,84,97,115,107,32,35,51,10,0
+@6a-mul~1_4:
+       dc.b      46,46,46,46,46,46,46,46,46,46,46,46,84,104,105
+       dc.b      115,32,105,115,32,84,97,115,107,32,35,52,10
+       dc.b      0
        section   bss
        xdef      _Task1Stk
 _Task1Stk:
@@ -192,6 +241,8 @@ _Task4Stk:
        xref      _Init_LCD
        xref      _Timer1_Init
        xref      _Init_RS232
+       xref      _OSInit
        xref      _OSStart
        xref      _OSTaskCreate
        xref      _OSTimeDly
+       xref      _printf

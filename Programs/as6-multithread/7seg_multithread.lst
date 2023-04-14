@@ -1,6 +1,6 @@
 680x0 MACRO ASSEMBLER   Version 5.00   (c) 1992-2005 Peter J. Fondse
 
-Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CPEN_412\CPEN-412-AS-6\PROGRAMS\AS6-MULTITHREAD\7SEG_MULTITHREAD.SRC
+Date: 13 Apr 2023      Time: 17:46:18          Source: C:\USERS\RCLAY\DESKTOP\CPEN_412\CPEN-412-AS-6\PROGRAMS\AS6-MULTITHREAD\7SEG_MULTITHREAD.SRC
 
                        1          section   code
                        2   ;********************************************************************************************************
@@ -123,7 +123,7 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
 00000418  00C0      
                      116              ;
 0000041A  23FC 0000  117              move.l      #(end_ROM-begin_ROM),__romsize	; initialise some values related to rom and ram limits (needed by OS)
-0000041E  5F96 0800 
+0000041E  6A1A 0800 
 00000422  00CC      
 00000424  23FC 0000  118              move.l      #(end_RAM-begin_RAM),__ramsize
 00000428  18EE 0800 
@@ -701,7 +701,7 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
                      637   ;
 00000730  6600 0086  638           bne       OSIntExit68K_1
 00000734  41F9 0000  639           lea       _OSUnMapTbl,A0                ;  y = OSUnMapTbl[OSRdyGrp];
-00000738  5E96      
+00000738  67AC      
 0000073A  4280       640           clr.l     D0
 0000073C  1039 0800  641           move.b    _OSRdyGrp,D0
 00000740  030E      
@@ -715,7 +715,7 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
 00000754  4280       648           clr.l     D0
 00000756  1010       649           move.b    (A0),D0                       ;  OSRdyTbl[y] in D0
 00000758  41F9 0000  650           lea       _OSUnMapTbl,A0
-0000075C  5E96      
+0000075C  67AC      
 0000075E  41F0 0800  651           lea       0(A0,D0.L),A0                 ;  &OSUnMapTbl[OSRdyTbl[y]] in A0
 00000762  1001       652           move.b    D1,D0
 00000764  E708       653           lsl.b     #3,D0                         ;  (y << 3) in D0
@@ -811,9 +811,9 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
                      729   ; *********************************************************************************************************
                      730   ; */
                      731   ; #ifndef  OS_MASTER_FILE
-                     732   ; #include "ucos_ii.h"
+                     732   ; #include <ucos_ii.h>
                      733   ; #endif
-                     734   ; #include "Bios.h"
+                     734   ; #include <Bios.h>
                      735   ; /*
                      736   ; *********************************************************************************************************
                      737   ; *                                           REVISION HISTORY
@@ -2884,7 +2884,7 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
 0000100C  C0BC 0000 2680          and.l     #255,D0
 00001010  00FF      
 00001012  41F9 0000 2681          lea       _OSUnMapTbl.L,A0
-00001016  5E96      
+00001016  67AC      
 00001018  1830 0800 2682          move.b    0(A0,D0.L),D4
                     2683   ; x    = OSUnMapTbl[pevent->OSEventTbl[y]];
 0000101C  2043      2684          move.l    D3,A0
@@ -2895,7 +2895,7 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
 0000102A  C0BC 0000 2688          and.l     #255,D0
 0000102E  00FF      
 00001030  41F9 0000 2689          lea       _OSUnMapTbl.L,A0
-00001034  5E96      
+00001034  67AC      
 00001036  1D70 0800 2690          move.b    0(A0,D0.L),-1(A6)
 0000103A  FFFF      
                     2691   ; prio = (INT8U)((y << 3u) + x);                      /* Find priority of task getting the msg       */
@@ -3423,7 +3423,7 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
                     3177   ; #if OS_EVENT_NAME_EN > 0u
                     3178   ; pevent1->OSEventName    = (INT8U *)(void *)"?";     /* Unknown name                            */
 00001354  41F9 0000 3179          lea       @ucos_ii_1.L,A0
-00001358  5E44      
+00001358  675A      
 0000135A  2242      3180          move.l    D2,A1
 0000135C  2348 0012 3181          move.l    A0,18(A1)
 00001360  5243      3182          addq.w    #1,D3
@@ -3448,7 +3448,7 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
                     3200   ; #if OS_EVENT_NAME_EN > 0u
                     3201   ; pevent1->OSEventName            = (INT8U *)(void *)"?"; /* Unknown name                            */
 00001380  41F9 0000 3202          lea       @ucos_ii_1.L,A0
-00001384  5E44      
+00001384  675A      
 00001386  2242      3203          move.l    D2,A1
 00001388  2348 0012 3204          move.l    A0,18(A1)
                     3205   ; #endif
@@ -3657,7 +3657,7 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
                     3384   ; OSTaskNameSet(OS_TASK_IDLE_PRIO, (INT8U *)(void *)"uC/OS-II Idle", &err);
 0000145E  486E FFFF 3385          pea       -1(A6)
 00001462  4879 0000 3386          pea       @ucos_ii_2.L
-00001466  5E46      
+00001466  675C      
 00001468  4878 003F 3387          pea       63
 0000146C  4EB9 0000 3388          jsr       _OSTaskNameSet
 00001470  4950      
@@ -3745,7 +3745,7 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
                     3465   ; OSTaskNameSet(OS_TASK_STAT_PRIO, (INT8U *)(void *)"uC/OS-II Stat", &err);
 000014BA  486E FFFF 3466          pea       -1(A6)
 000014BE  4879 0000 3467          pea       @ucos_ii_3.L
-000014C2  5E54      
+000014C2  676A      
 000014C4  4878 003E 3468          pea       62
 000014C8  4EB9 0000 3469          jsr       _OSTaskNameSet
 000014CC  4950      
@@ -3824,7 +3824,7 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
                     3535   ; #if OS_TASK_NAME_EN > 0u
                     3536   ; ptcb1->OSTCBTaskName = (INT8U *)(void *)"?";             /* Unknown name                       */
 00001546  41F9 0000 3537          lea       @ucos_ii_1.L,A0
-0000154A  5E44      
+0000154A  675A      
 0000154C  2242      3538          move.l    D2,A1
 0000154E  2348 004E 3539          move.l    A0,78(A1)
 00001552  5203      3540          addq.b    #1,D3
@@ -3846,7 +3846,7 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
                     3555   ; #if OS_TASK_NAME_EN > 0u
                     3556   ; ptcb1->OSTCBTaskName    = (INT8U *)(void *)"?";              /* Unknown name                       */
 0000156E  41F9 0000 3557          lea       @ucos_ii_1.L,A0
-00001572  5E44      
+00001572  675A      
 00001574  2242      3558          move.l    D2,A1
 00001576  2348 004E 3559          move.l    A0,78(A1)
                     3560   ; #endif
@@ -4054,7 +4054,7 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
 00001646  C0BC 0000 3747          and.l     #255,D0
 0000164A  00FF      
 0000164C  41F9 0000 3748          lea       _OSUnMapTbl.L,A0
-00001650  5E96      
+00001650  67AC      
 00001652  1430 0800 3749          move.b    0(A0,D0.L),D2
                     3750   ; OSPrioHighRdy = (INT8U)((y << 3u) + OSUnMapTbl[OSRdyTbl[y]]);
 00001656  1002      3751          move.b    D2,D0
@@ -4067,7 +4067,7 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
 0000166A  C2BC 0000 3756          and.l     #255,D1
 0000166E  00FF      
 00001670  41F9 0000 3757          lea       _OSUnMapTbl.L,A0
-00001674  5E96      
+00001674  67AC      
 00001676  D030 1800 3758          add.b     0(A0,D1.L),D0
 0000167A  13C0 0800 3759          move.b    D0,_OSPrioHighRdy.L
 0000167E  030C      
@@ -4236,7 +4236,7 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
 000016DE  2F12      3918          move.l    (A2),-(A7)
 000016E0  4878 0064 3919          pea       100
 000016E4  4EB9 0000 3920          jsr       ULDIV
-000016E8  5D66      
+000016E8  5DAE      
 000016EA  2497      3921          move.l    (A7),(A2)
 000016EC  504F      3922          addq.w    #8,A7
                     3923   ; if (OSIdleCtrMax == 0uL) {
@@ -4268,7 +4268,7 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
 00001710  2F12      3946          move.l    (A2),-(A7)
 00001712  4878 0064 3947          pea       100
 00001716  4EB9 0000 3948          jsr       ULMUL
-0000171A  5CC6      
+0000171A  5D0E      
 0000171C  2017      3949          move.l    (A7),D0
 0000171E  504F      3950          addq.w    #8,A7
 00001720  23C0 0800 3951          move.l    D0,_OSIdleCtr.L
@@ -4296,7 +4296,7 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
 00001746  0200      
 00001748  2F12      3969          move.l    (A2),-(A7)
 0000174A  4EB9 0000 3970          jsr       ULDIV
-0000174E  5D66      
+0000174E  5DAE      
 00001750  2217      3971          move.l    (A7),D1
 00001752  504F      3972          addq.w    #8,A7
 00001754  9081      3973          sub.l     D1,D0
@@ -4609,7 +4609,7 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
                     4260   ; #if OS_TASK_NAME_EN > 0u
                     4261   ; ptcb->OSTCBTaskName    = (INT8U *)(void *)"?";
 000018EE  41F9 0000 4262          lea       @ucos_ii_1.L,A0
-000018F2  5E44      
+000018F2  675A      
 000018F4  2242      4263          move.l    D2,A1
 000018F6  2348 004E 4264          move.l    A0,78(A1)
                     4265   ; #endif
@@ -5114,7 +5114,7 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
                     4750   ; #if OS_FLAG_NAME_EN > 0u
                     4751   ; pgrp->OSFlagName     = (INT8U *)(void *)"?";
 00001B32  41F9 0000 4752          lea       @ucos_ii_1.L,A0
-00001B36  5E44      
+00001B36  675A      
 00001B38  2242      4753          move.l    D2,A1
 00001B3A  2348 0008 4754          move.l    A0,8(A1)
                     4755   ; #endif
@@ -5270,7 +5270,7 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
                     4901   ; #if OS_FLAG_NAME_EN > 0u
                     4902   ; pgrp->OSFlagName     = (INT8U *)(void *)"?";
 00001BD4  41F9 0000 4903          lea       @ucos_ii_1.L,A0
-00001BD8  5E44      
+00001BD8  675A      
 00001BDA  2242      4904          move.l    D2,A1
 00001BDC  2348 0008 4905          move.l    A0,8(A1)
                     4906   ; #endif
@@ -5333,7 +5333,7 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
                     4961   ; #if OS_FLAG_NAME_EN > 0u
                     4962   ; pgrp->OSFlagName     = (INT8U *)(void *)"?";
 00001C32  41F9 0000 4963          lea       @ucos_ii_1.L,A0
-00001C36  5E44      
+00001C36  675A      
 00001C38  2242      4964          move.l    D2,A1
 00001C3A  2348 0008 4965          move.l    A0,8(A1)
                     4966   ; #endif
@@ -6760,7 +6760,7 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
                     6334   ; #if OS_FLAG_NAME_EN > 0u
                     6335   ; pgrp1->OSFlagName     = (INT8U *)(void *)"?";               /* Unknown name                    */
 00002348  41F9 0000 6336          lea       @ucos_ii_1.L,A0
-0000234C  5E44      
+0000234C  675A      
 0000234E  2242      6337          move.l    D2,A1
 00002350  2348 0008 6338          move.l    A0,8(A1)
 00002354  5243      6339          addq.w    #1,D3
@@ -6785,7 +6785,7 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
                     6357   ; #if OS_FLAG_NAME_EN > 0u
                     6358   ; pgrp1->OSFlagName     = (INT8U *)(void *)"?";                   /* Unknown name                    */
 00002374  41F9 0000 6359          lea       @ucos_ii_1.L,A0
-00002378  5E44      
+00002378  675A      
 0000237A  2242      6360          move.l    D2,A1
 0000237C  2348 0008 6361          move.l    A0,8(A1)
                     6362   ; #endif
@@ -7138,7 +7138,7 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
                     6696   ; #if OS_EVENT_NAME_EN > 0u
                     6697   ; pevent->OSEventName    = (INT8U *)(void *)"?";
 000024EA  41F9 0000 6698          lea       @ucos_ii_1.L,A0
-000024EE  5E44      
+000024EE  675A      
 000024F0  2242      6699          move.l    D2,A1
 000024F2  2348 0012 6700          move.l    A0,18(A1)
                     6701   ; #endif
@@ -7284,7 +7284,7 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
                     6837   ; #if OS_EVENT_NAME_EN > 0u
                     6838   ; pevent->OSEventName = (INT8U *)(void *)"?";
 00002584  41F9 0000 6839          lea       @ucos_ii_1.L,A0
-00002588  5E44      
+00002588  675A      
 0000258A  2242      6840          move.l    D2,A1
 0000258C  2348 0012 6841          move.l    A0,18(A1)
                     6842   ; #endif
@@ -7342,7 +7342,7 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
                     6893   ; #if OS_EVENT_NAME_EN > 0u
                     6894   ; pevent->OSEventName    = (INT8U *)(void *)"?";
 000025DE  41F9 0000 6895          lea       @ucos_ii_1.L,A0
-000025E2  5E44      
+000025E2  675A      
 000025E4  2242      6896          move.l    D2,A1
 000025E6  2348 0012 6897          move.l    A0,18(A1)
                     6898   ; #endif
@@ -8778,7 +8778,7 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
                     8295   ; #if OS_MEM_NAME_EN > 0u
                     8296   ; pmem->OSMemName  = (INT8U *)(void *)"?";
 00002BF0  41F9 0000 8297          lea       @ucos_ii_1.L,A0
-00002BF4  5E44      
+00002BF4  675A      
 00002BF6  2242      8298          move.l    D2,A1
 00002BF8  2348 0014 8299          move.l    A0,20(A1)
 00002BFC  5243      8300          addq.w    #1,D3
@@ -8800,7 +8800,7 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
                     8315   ; #if OS_MEM_NAME_EN > 0u
                     8316   ; pmem->OSMemName = (INT8U *)(void *)"?";
 00002C18  41F9 0000 8317          lea       @ucos_ii_1.L,A0
-00002C1C  5E44      
+00002C1C  675A      
 00002C1E  2242      8318          move.l    D2,A1
 00002C20  2348 0014 8319          move.l    A0,20(A1)
                     8320   ; #endif
@@ -9172,7 +9172,7 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
                     8674   ; #if OS_EVENT_NAME_EN > 0u
                     8675   ; pevent->OSEventName = (INT8U *)(void *)"?";
 00002DAA  41F9 0000 8676          lea       @ucos_ii_1.L,A0
-00002DAE  5E44      
+00002DAE  675A      
 00002DB0  2242      8677          move.l    D2,A1
 00002DB2  2348 0012 8678          move.l    A0,18(A1)
                     8679   ; #endif
@@ -9324,7 +9324,7 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
                     8821   ; #if OS_EVENT_NAME_EN > 0u
                     8822   ; pevent->OSEventName   = (INT8U *)(void *)"?";
 00002E4A  41F9 0000 8823          lea       @ucos_ii_1.L,A0
-00002E4E  5E44      
+00002E4E  675A      
 00002E50  2242      8824          move.l    D2,A1
 00002E52  2348 0012 8825          move.l    A0,18(A1)
                     8826   ; #endif
@@ -9436,7 +9436,7 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
                     8927   ; #if OS_EVENT_NAME_EN > 0u
                     8928   ; pevent->OSEventName   = (INT8U *)(void *)"?";
 00002F10  41F9 0000 8929          lea       @ucos_ii_1.L,A0
-00002F14  5E44      
+00002F14  675A      
 00002F16  2242      8930          move.l    D2,A1
 00002F18  2348 0012 8931          move.l    A0,18(A1)
                     8932   ; #endif
@@ -10659,7 +10659,7 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
                     10088   ; #if OS_EVENT_NAME_EN > 0u
                     10089   ; pevent->OSEventName    = (INT8U *)(void *)"?";
 00003634  41F9 0000 10090          lea       @ucos_ii_1.L,A0
-00003638  5E44      
+00003638  675A      
 0000363A  2242      10091          move.l    D2,A1
 0000363C  2348 0012 10092          move.l    A0,18(A1)
                     10093   ; #endif
@@ -10826,7 +10826,7 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
                     10249   ; #if OS_EVENT_NAME_EN > 0u
                     10250   ; pevent->OSEventName    = (INT8U *)(void *)"?";
 000036E4  41F9 0000 10251          lea       @ucos_ii_1.L,A0
-000036E8  5E44      
+000036E8  675A      
 000036EA  2242      10252          move.l    D2,A1
 000036EC  2348 0012 10253          move.l    A0,18(A1)
                     10254   ; #endif
@@ -10892,7 +10892,7 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
                     10313   ; #if OS_EVENT_NAME_EN > 0u
                     10314   ; pevent->OSEventName    = (INT8U *)(void *)"?";
 0000374A  41F9 0000 10315          lea       @ucos_ii_1.L,A0
-0000374E  5E44      
+0000374E  675A      
 00003750  2242      10316          move.l    D2,A1
 00003752  2348 0012 10317          move.l    A0,18(A1)
                     10318   ; #endif
@@ -12270,7 +12270,7 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
                     11646   ; #if OS_EVENT_NAME_EN > 0u
                     11647   ; pevent->OSEventName    = (INT8U *)(void *)"?";
 00003E1A  41F9 0000 11648          lea       @ucos_ii_1.L,A0
-00003E1E  5E44      
+00003E1E  675A      
 00003E20  2242      11649          move.l    D2,A1
 00003E22  2348 0012 11650          move.l    A0,18(A1)
                     11651   ; #endif
@@ -12417,7 +12417,7 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
                     11788   ; #if OS_EVENT_NAME_EN > 0u
                     11789   ; pevent->OSEventName    = (INT8U *)(void *)"?";
 00003EB4  41F9 0000 11790          lea       @ucos_ii_1.L,A0
-00003EB8  5E44      
+00003EB8  675A      
 00003EBA  2242      11791          move.l    D2,A1
 00003EBC  2348 0012 11792          move.l    A0,18(A1)
                     11793   ; #endif
@@ -12475,7 +12475,7 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
                     11844   ; #if OS_EVENT_NAME_EN > 0u
                     11845   ; pevent->OSEventName    = (INT8U *)(void *)"?";
 00003F0E  41F9 0000 11846          lea       @ucos_ii_1.L,A0
-00003F12  5E44      
+00003F12  675A      
 00003F14  2242      11847          move.l    D2,A1
 00003F16  2348 0012 11848          move.l    A0,18(A1)
                     11849   ; #endif
@@ -14224,7 +14224,7 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
                     13501   ; #if OS_TASK_NAME_EN > 0u
                     13502   ; ptcb->OSTCBTaskName = (INT8U *)(void *)"?";
 000047F8  41F9 0000 13503          lea       @ucos_ii_1.L,A0
-000047FC  5E44      
+000047FC  675A      
 000047FE  2242      13504          move.l    D2,A1
 00004800  2348 004E 13505          move.l    A0,78(A1)
                     13506   ; #endif
@@ -15779,7 +15779,7 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
 00004E9E  2F00      14974          move.l    D0,-(A7)
 00004EA0  4878 0E10 14975          pea       3600
 00004EA4  4EB9 0000 14976          jsr       ULMUL
-00004EA8  5CC6      
+00004EA8  5D0E      
 00004EAA  2017      14977          move.l    (A7),D0
 00004EAC  504F      14978          addq.w    #8,A7
 00004EAE  122E 000F 14979          move.b    15(A6),D1
@@ -15788,7 +15788,7 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
 00004EB8  2F01      14981          move.l    D1,-(A7)
 00004EBA  4878 003C 14982          pea       60
 00004EBE  4EB9 0000 14983          jsr       ULMUL
-00004EC2  5CC6      
+00004EC2  5D0E      
 00004EC4  2217      14984          move.l    (A7),D1
 00004EC6  504F      14985          addq.w    #8,A7
 00004EC8  D081      14986          add.l     D1,D0
@@ -15799,7 +15799,7 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
 00004ED6  2F00      14990          move.l    D0,-(A7)
 00004ED8  4878 0064 14991          pea       100
 00004EDC  4EB9 0000 14992          jsr       ULMUL
-00004EE0  5CC6      
+00004EE0  5D0E      
 00004EE2  2017      14993          move.l    (A7),D0
 00004EE4  504F      14994          addq.w    #8,A7
 00004EE6  322E 0016 14995          move.w    22(A6),D1
@@ -15809,13 +15809,13 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
 00004EF2  2F01      14998          move.l    D1,-(A7)
 00004EF4  4878 0064 14999          pea       100
 00004EF8  4EB9 0000 15000          jsr       ULMUL
-00004EFC  5CC6      
+00004EFC  5D0E      
 00004EFE  2217      15001          move.l    (A7),D1
 00004F00  504F      15002          addq.w    #8,A7
 00004F02  2F01      15003          move.l    D1,-(A7)
 00004F04  4878 03E8 15004          pea       1000
 00004F08  4EB9 0000 15005          jsr       ULDIV
-00004F0C  5D66      
+00004F0C  5DAE      
 00004F0E  2217      15006          move.l    (A7),D1
 00004F10  504F      15007          addq.w    #8,A7
 00004F12  D081      15008          add.l     D1,D0
@@ -16252,7 +16252,7 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
 000050A2  660E      15421          bne.s     OSTmrCreate_6
                     15422   ; ptmr->OSTmrName    = (INT8U *)(void *)"?";
 000050A4  41F9 0000 15423          lea       @ucos_ii_1.L,A0
-000050A8  5E44      
+000050A8  675A      
 000050AA  2242      15424          move.l    D2,A1
 000050AC  2348 001E 15425          move.l    A0,30(A1)
 000050B0  6008      15426          bra.s     OSTmrCreate_7
@@ -17401,7 +17401,7 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
                     16532   ; #if OS_TMR_CFG_NAME_EN > 0u
                     16533   ; ptmr->OSTmrName        = (INT8U *)(void *)"?";
 0000562A  41F9 0000 16534          lea       @ucos_ii_1.L,A0
-0000562E  5E44      
+0000562E  675A      
 00005630  2242      16535          move.l    D2,A1
 00005632  2348 001E 16536          move.l    A0,30(A1)
                     16537   ; #endif
@@ -17503,7 +17503,7 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
                     16624   ; #if OS_TMR_CFG_NAME_EN > 0u
                     16625   ; ptmr1->OSTmrName    = (INT8U *)(void *)"?";
 000056D6  41F9 0000 16626          lea       @ucos_ii_1.L,A0
-000056DA  5E44      
+000056DA  675A      
 000056DC  2242      16627          move.l    D2,A1
 000056DE  2348 001E 16628          move.l    A0,30(A1)
 000056E2  5243      16629          addq.w    #1,D3
@@ -17531,7 +17531,7 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
                     16650   ; #if OS_TMR_CFG_NAME_EN > 0u
                     16651   ; ptmr1->OSTmrName    = (INT8U *)(void *)"?";
 0000570A  41F9 0000 16652          lea       @ucos_ii_1.L,A0
-0000570E  5E44      
+0000570E  675A      
 00005710  2242      16653          move.l    D2,A1
 00005712  2348 001E 16654          move.l    A0,30(A1)
                     16655   ; #endif
@@ -17563,7 +17563,7 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
                     16675   ; OSEventNameSet(OSTmrSem,       (INT8U *)(void *)"uC/OS-II TmrLock",   &err);
 0000574E  486E FFF9 16676          pea       -7(A6)
 00005752  4879 0000 16677          pea       @ucos_ii_4.L
-00005756  5E62      
+00005756  6778      
 00005758  2F39 0800 16678          move.l    _OSTmrSem.L,-(A7)
 0000575C  0D82      
 0000575E  4EB8 099C 16679          jsr       _OSEventNameSet
@@ -17571,7 +17571,7 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
                     16681   ; OSEventNameSet(OSTmrSemSignal, (INT8U *)(void *)"uC/OS-II TmrSignal", &err);
 00005766  486E FFF9 16682          pea       -7(A6)
 0000576A  4879 0000 16683          pea       @ucos_ii_5.L
-0000576E  5E74      
+0000576E  678A      
 00005770  2F39 0800 16684          move.l    _OSTmrSemSignal.L,-(A7)
 00005774  0D86      
 00005776  4EB8 099C 16685          jsr       _OSEventNameSet
@@ -17661,7 +17661,7 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
                     16764   ; OSTaskNameSet(OS_TASK_TMR_PRIO, (INT8U *)(void *)"uC/OS-II Tmr", &err);
 000057CA  486E FFFF 16765          pea       -1(A6)
 000057CE  4879 0000 16766          pea       @ucos_ii_6.L
-000057D2  5E88      
+000057D2  679E      
 000057D4  4878 0005 16767          pea       5
 000057D8  4EB8 4950 16768          jsr       _OSTaskNameSet
 000057DC  DEFC 000C 16769          add.w     #12,A7
@@ -17747,7 +17747,7 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
 00005848  2F10      16846          move.l    (A0),-(A7)
 0000584A  4878 0008 16847          pea       8
 0000584E  4EB9 0000 16848          jsr       ULDIV
-00005852  5D66      
+00005852  5DAE      
 00005854  202F 0004 16849          move.l    4(A7),D0
 00005858  504F      16850          addq.w    #8,A7
 0000585A  3D40 FFFE 16851          move.w    D0,-2(A6)
@@ -17835,7 +17835,7 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
 000058CE  2F10      16929          move.l    (A0),-(A7)
 000058D0  4878 0008 16930          pea       8
 000058D4  4EB9 0000 16931          jsr       ULDIV
-000058D8  5D66      
+000058D8  5DAE      
 000058DA  202F 0004 16932          move.l    4(A7),D0
 000058DE  504F      16933          addq.w    #8,A7
 000058E0  3D40 FFFE 16934          move.w    D0,-2(A6)
@@ -17951,7 +17951,7 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
 0000597E  2F12      17039          move.l    (A2),-(A7)
 00005980  4878 0008 17040          pea       8
 00005984  4EB9 0000 17041          jsr       ULDIV
-00005988  5D66      
+00005988  5DAE      
 0000598A  202F 0004 17042          move.l    4(A7),D0
 0000598E  504F      17043          addq.w    #8,A7
 00005990  3D40 FFFE 17044          move.w    D0,-2(A6)
@@ -18063,7 +18063,7 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
                     17146   ; #include "os_time.c"
                     17147   ; #include "os_tmr.c"
                     17148   ; C:\IDE68K\UCOSII\BIOS.C - Compiled by CC68K  Version 5.00 (c) 1991-2005  Peter J. Fondse
-                    17149   ; #include "Bios.h"
+                    17149   ; #include <Bios.h>
                     17150   ; /*
                     17151   ; **  These basic IO routines are designed to handle input and output of characters
                     17152   ; **  via the serial port to the console of hyperternal
@@ -18434,644 +18434,1728 @@ Date: 13 Apr 2023      Time: 13:39:08          Source: C:\USERS\RCLAY\DESKTOP\CP
                     17495   ; *
                     17496   ; */
                     17497   ; #include <stdio.h>
-                    17498   ; #include "Bios.h"
-                    17499   ; #include "ucos_ii.h"
-                    17500   ; #define STACKSIZE 256
-                    17501   ; /*
-                    17502   ; ** Stacks for each task are allocated here in the application in this case = 256 bytes
-                    17503   ; ** but you can change size if required
-                    17504   ; */
-                    17505   ; OS_STK Task1Stk[STACKSIZE];
-                    17506   ; OS_STK Task2Stk[STACKSIZE];
-                    17507   ; OS_STK Task3Stk[STACKSIZE];
-                    17508   ; OS_STK Task4Stk[STACKSIZE];
-                    17509   ; /* Prototypes for our tasks/threads*/
-                    17510   ; void Task1(void *); /* (void *) means the child task expects no data from parent*/
-                    17511   ; void Task2(void *);
-                    17512   ; void Task3(void *);
-                    17513   ; void Task4(void *);
-                    17514   ; /*
-                    17515   ; ** Our main application which has to
-                    17516   ; ** 1) Initialise any peripherals on the board, e.g. RS232 for hyperterminal + LCD
-                    17517   ; ** 2) Call OSInit() to initialise the OS
-                    17518   ; ** 3) Create our application task/threads
-                    17519   ; ** 4) Call OSStart()
-                    17520   ; */
-                    17521   ; void main(void)
-                    17522   ; {
-                    17523   _main:
-00005BCE  2F0A      17524          move.l    A2,-(A7)
-00005BD0  45F8 4476 17525          lea       _OSTaskCreate.L,A2
-                    17526   ; // initialise board hardware by calling our routines from the BIOS.C source file
-                    17527   ; Init_RS232();
-00005BD4  4EB8 5A1C 17528          jsr       _Init_RS232
-                    17529   ; Init_LCD();
-00005BD8  4EB8 5AD4 17530          jsr       _Init_LCD
-                    17531   ; /* display welcome message on LCD display */
-                    17532   ; //Oline0("Altera DE1/68K");
-                    17533   ; //Oline1("Micrium uC/OS-II RTOS");
-                    17534   ; //OSInit(); // call to initialise the OS
-                    17535   ; /*
-                    17536   ; ** Now create the 4 child tasks and pass them no data.
-                    17537   ; ** the smaller the numerical priority value, the higher the task priority
-                    17538   ; */
-                    17539   ; OSTaskCreate(Task1, OS_NULL, &Task1Stk[STACKSIZE], 12);
-00005BDC  4878 000C 17540          pea       12
-00005BE0  41F9 0800 17541          lea       _Task1Stk.L,A0
-00005BE4  10EE      
-00005BE6  D0FC 0200 17542          add.w     #512,A0
-00005BEA  2F08      17543          move.l    A0,-(A7)
-00005BEC  42A7      17544          clr.l     -(A7)
-00005BEE  4879 0000 17545          pea       _Task1.L
-00005BF2  5C5C      
-00005BF4  4E92      17546          jsr       (A2)
-00005BF6  DEFC 0010 17547          add.w     #16,A7
-                    17548   ; OSTaskCreate(Task2, OS_NULL, &Task2Stk[STACKSIZE], 11); // highest priority task
-00005BFA  4878 000B 17549          pea       11
-00005BFE  41F9 0800 17550          lea       _Task2Stk.L,A0
-00005C02  12EE      
-00005C04  D0FC 0200 17551          add.w     #512,A0
-00005C08  2F08      17552          move.l    A0,-(A7)
-00005C0A  42A7      17553          clr.l     -(A7)
-00005C0C  4879 0000 17554          pea       _Task2.L
-00005C10  5C80      
-00005C12  4E92      17555          jsr       (A2)
-00005C14  DEFC 0010 17556          add.w     #16,A7
-                    17557   ; OSTaskCreate(Task3, OS_NULL, &Task3Stk[STACKSIZE], 13);
-00005C18  4878 000D 17558          pea       13
-00005C1C  41F9 0800 17559          lea       _Task3Stk.L,A0
-00005C20  14EE      
-00005C22  D0FC 0200 17560          add.w     #512,A0
-00005C26  2F08      17561          move.l    A0,-(A7)
-00005C28  42A7      17562          clr.l     -(A7)
-00005C2A  4879 0000 17563          pea       _Task3.L
-00005C2E  5C94      
-00005C30  4E92      17564          jsr       (A2)
-00005C32  DEFC 0010 17565          add.w     #16,A7
-                    17566   ; OSTaskCreate(Task4, OS_NULL, &Task4Stk[STACKSIZE], 14); // lowest priority task
-00005C36  4878 000E 17567          pea       14
-00005C3A  41F9 0800 17568          lea       _Task4Stk.L,A0
-00005C3E  16EE      
-00005C40  D0FC 0200 17569          add.w     #512,A0
-00005C44  2F08      17570          move.l    A0,-(A7)
-00005C46  42A7      17571          clr.l     -(A7)
-00005C48  4879 0000 17572          pea       _Task4.L
-00005C4C  5CB6      
-00005C4E  4E92      17573          jsr       (A2)
-00005C50  DEFC 0010 17574          add.w     #16,A7
-                    17575   ; OSStart(); // call to start the OS scheduler, (never returns from this function)
-00005C54  4EB8 0EA6 17576          jsr       _OSStart
-00005C58  245F      17577          move.l    (A7)+,A2
-00005C5A  4E75      17578          rts
-                    17579   ; }
-                    17580   ; /*
-                    17581   ; ** IMPORTANT : Timer 1 interrupts must be started by the highest priority task
-                    17582   ; ** that runs first which is Task2
-                    17583   ; */
-                    17584   ; void Task1(void *pdata)
-                    17585   ; {
-                    17586   _Task1:
-00005C5C  4E56 0000 17587          link      A6,#0
-00005C60  2F02      17588          move.l    D2,-(A7)
-                    17589   ; int HEX_COUNT = 0;
-00005C62  4282      17590          clr.l     D2
-                    17591   ; for (;;) {
-                    17592   Task1_1:
-                    17593   ; HEX_B = HEX_COUNT;
-00005C64  13C2 0040 17594          move.b    D2,4194322
-00005C68  0012      
-                    17595   ; HEX_A = HEX_COUNT++;
-00005C6A  2002      17596          move.l    D2,D0
-00005C6C  5282      17597          addq.l    #1,D2
-00005C6E  13C0 0040 17598          move.b    D0,4194320
-00005C72  0010      
-                    17599   ; //printf("This is Task #1\n");
-                    17600   ; OSTimeDly(40);
-00005C74  4878 0028 17601          pea       40
-00005C78  4EB8 4DD6 17602          jsr       _OSTimeDly
-00005C7C  584F      17603          addq.w    #4,A7
-00005C7E  60E4      17604          bra       Task1_1
-                    17605   ; }
-                    17606   ; }
-                    17607   ; /*
-                    17608   ; ** Task 2 below was created with the highest priority so it must start timer1
-                    17609   ; ** so that it produces interrupts for the 100hz context switches
-                    17610   ; */
-                    17611   ; void Task2(void *pdata)
-                    17612   ; {
-                    17613   _Task2:
-00005C80  4E56 0000 17614          link      A6,#0
-                    17615   ; // must start timer ticker here
-                    17616   ; Timer1_Init() ; // this function is in BIOS.C and written by us to start timer
-00005C84  4EB8 5BBC 17617          jsr       _Timer1_Init
-                    17618   ; for (;;) {
-                    17619   Task2_1:
-                    17620   ; //printf("....This is Task #2\n");
-                    17621   ; OSTimeDly(10);
-00005C88  4878 000A 17622          pea       10
-00005C8C  4EB8 4DD6 17623          jsr       _OSTimeDly
-00005C90  584F      17624          addq.w    #4,A7
-00005C92  60F4      17625          bra       Task2_1
-                    17626   ; }
-                    17627   ; }
-                    17628   ; void Task3(void *pdata)
-                    17629   ; {
-                    17630   _Task3:
-00005C94  4E56 FFFC 17631          link      A6,#-4
-                    17632   ; int count = 0;
-00005C98  42AE FFFC 17633          clr.l     -4(A6)
-                    17634   ; for (;;) {
-                    17635   Task3_1:
-                    17636   ; PortA = count++;
-00005C9C  202E FFFC 17637          move.l    -4(A6),D0
-00005CA0  52AE FFFC 17638          addq.l    #1,-4(A6)
-00005CA4  13C0 0040 17639          move.b    D0,4194304
-00005CA8  0000      
-                    17640   ; //printf("........This is Task #3\n");
-                    17641   ; OSTimeDly(20);
-00005CAA  4878 0014 17642          pea       20
-00005CAE  4EB8 4DD6 17643          jsr       _OSTimeDly
-00005CB2  584F      17644          addq.w    #4,A7
-00005CB4  60E6      17645          bra       Task3_1
-                    17646   ; }
-                    17647   ; }
-                    17648   ; void Task4(void *pdata)
-                    17649   ; {
-                    17650   _Task4:
-00005CB6  4E56 0000 17651          link      A6,#0
-                    17652   ; for (;;) {
-                    17653   Task4_1:
-                    17654   ; //printf("............This is Task #4\n");
-                    17655   ; OSTimeDly(50);
-00005CBA  4878 0032 17656          pea       50
-00005CBE  4EB8 4DD6 17657          jsr       _OSTimeDly
-00005CC2  584F      17658          addq.w    #4,A7
-00005CC4  60F4      17659          bra       Task4_1
-                    17660   ; }
-                    17661   ; }
-                    17662   ULMUL:
-00005CC6  4E56 0000 17663          link    A6,#0
-00005CCA  48E7 C000 17664          movem.l D0/D1,-(A7)
-00005CCE  222E 0008 17665          move.l  8(A6),D1
-00005CD2  202E 000C 17666          move.l  12(A6),D0
-00005CD6  602C      17667          bra.s   lmul_3
-                    17668   LMUL:
-00005CD8  4E56 0000 17669          link    A6,#0
-00005CDC  48E7 C000 17670          movem.l D0/D1,-(A7)
-00005CE0  222E 0008 17671          move.l  8(A6),D1
-00005CE4  202E 000C 17672          move.l  12(A6),D0
-00005CE8  4A80      17673          tst.l   D0
-00005CEA  6A0A      17674          bpl.s   lmul_1
-00005CEC  4480      17675          neg.l   D0
-00005CEE  4A81      17676          tst.l   D1
-00005CF0  6A0A      17677          bpl.s   lmul_2
-00005CF2  4481      17678          neg.l   D1
-00005CF4  600E      17679          bra.s   lmul_3
-                    17680   lmul_1:
-00005CF6  4A81      17681          tst.l   D1
-00005CF8  6A0A      17682          bpl.s   lmul_3
-00005CFA  4481      17683          neg.l   D1
-                    17684   lmul_2:
-00005CFC  6114      17685          bsr.s   domul
-00005CFE  4481      17686          neg.l   D1
-00005D00  4080      17687          negx.l  D0
-00005D02  6002      17688          bra.s   lmul_4
-                    17689   lmul_3:
-00005D04  610C      17690          bsr.s   domul
-                    17691   lmul_4:
-00005D06  2D41 0008 17692          move.l  D1,8(A6)
-00005D0A  4CDF 0003 17693          movem.l (A7)+,D0/D1
-00005D0E  4E5E      17694          unlk    A6
-00005D10  4E75      17695          rts
-                    17696   domul:
-00005D12  0C81 0000 17697          cmpi.l  #$FFFF,D1
-00005D16  FFFF      
-00005D18  620C      17698          bhi.s   domul_1
-00005D1A  0C80 0000 17699          cmpi.l  #$FFFF,D0
-00005D1E  FFFF      
-00005D20  620E      17700          bhi.s   domul_2
-00005D22  C2C0      17701          mulu    D0,D1
-00005D24  4E75      17702          rts
-                    17703   domul_1:
-00005D26  0C80 0000 17704          cmpi.l  #$FFFF,D0
-00005D2A  FFFF      
-00005D2C  6218      17705          bhi.s   domul_4
-00005D2E  6002      17706          bra.s   domul_3
-                    17707   domul_2
-00005D30  C141      17708          exg     D0,D1
-                    17709   domul_3:
-00005D32  2F02      17710          move.l  D2,-(A7)
-00005D34  2401      17711          move.l  D1,D2
-00005D36  4842      17712          swap    D2
-00005D38  C2C0      17713          mulu    D0,D1
-00005D3A  C4C0      17714          mulu    D0,D2
-00005D3C  4842      17715          swap    D2
-00005D3E  4242      17716          clr.w   D2
-00005D40  D282      17717          add.l   D2,D1
-00005D42  241F      17718          move.l  (A7)+,D2
-00005D44  4E75      17719          rts
-                    17720   domul_4:
-00005D46  48E7 3000 17721          movem.l D2/D3,-(A7)
-00005D4A  2401      17722          move.l  D1,D2
-00005D4C  2601      17723          move.l  D1,D3
-00005D4E  C2C0      17724          mulu    D0,D1
-00005D50  4842      17725          swap    D2
-00005D52  C4C0      17726          mulu    D0,D2
-00005D54  4840      17727          swap    D0
-00005D56  C6C0      17728          mulu    D0,D3
-00005D58  D483      17729          add.l   D3,D2
-00005D5A  4842      17730          swap    D2
-00005D5C  4242      17731          clr.w   D2
-00005D5E  D282      17732          add.l   D2,D1
-00005D60  4CDF 000C 17733          movem.l (A7)+,D2/D3
-00005D64  4E75      17734          rts
-                    17735   ULDIV:
-00005D66  4E56 0000 17736          link    A6,#0
-00005D6A  48E7 C000 17737          movem.l D0/D1,-(A7)
-00005D6E  222E 0008 17738          move.l  8(A6),D1
-00005D72  202E 000C 17739          move.l  12(A6),D0
-00005D76  6036      17740          bra.s   ldiv_3
-                    17741   LDIV:
-00005D78  4E56 0000 17742          link    A6,#0
-00005D7C  48E7 C000 17743          movem.l D0/D1,-(A7)
-00005D80  222E 0008 17744          move.l  8(A6),D1
-00005D84  202E 000C 17745          move.l  12(A6),D0
-00005D88  4A80      17746          tst.l   D0
-00005D8A  6A0E      17747          bpl.s   ldiv_1
-00005D8C  4480      17748          neg.l   D0
-00005D8E  4A81      17749          tst.l   D1
-00005D90  6A14      17750          bpl.s   ldiv_2
-00005D92  4481      17751          neg.l   D1
-00005D94  612A      17752          bsr.s   dodiv
-00005D96  4481      17753          neg.l   D1
-00005D98  6016      17754          bra.s   ldiv_4
-                    17755   ldiv_1:
-00005D9A  4A81      17756          tst.l   D1
-00005D9C  6A10      17757          bpl.s   ldiv_3
-00005D9E  4481      17758          neg.l   D1
-00005DA0  611E      17759          bsr.s   dodiv
-00005DA2  4480      17760          neg.l   D0
-00005DA4  600A      17761          bra.s   ldiv_4
-                    17762   ldiv_2:
-00005DA6  6118      17763          bsr.s   dodiv
-00005DA8  4480      17764          neg.l   D0
-00005DAA  4481      17765          neg.l   D1
-00005DAC  6002      17766          bra.s   ldiv_4
-                    17767   ldiv_3:
-00005DAE  6110      17768          bsr.s   dodiv
-                    17769   ldiv_4:
-00005DB0  2D40 0008 17770          move.l  D0,8(A6)
-00005DB4  2D41 000C 17771          move.l  D1,12(A6)
-00005DB8  4CDF 0003 17772          movem.l (A7)+,D0/D1
-00005DBC  4E5E      17773          unlk    A6
-00005DBE  4E75      17774          rts
-                    17775   dodiv:
-00005DC0  0C81 0000 17776          cmpi.l  #$FFFF,D1
-00005DC4  FFFF      
-00005DC6  6236      17777          bhi.s   dodiv_2
-00005DC8  0C80 0000 17778          cmpi.l  #$FFFF,D0
-00005DCC  FFFF      
-00005DCE  6210      17779          bhi.s   dodiv_1
-00005DD0  80C1      17780          divu    D1,D0
-00005DD2  2200      17781          move.l  D0,D1
-00005DD4  4241      17782          clr.w   D1
-00005DD6  4841      17783          swap    D1
-00005DD8  0280 0000 17784          andi.l  #$FFFF,D0
-00005DDC  FFFF      
-00005DDE  4E75      17785          rts
-                    17786   dodiv_1:
-00005DE0  48A7 A000 17787          movem.w D0/D2,-(A7)
-00005DE4  4240      17788          clr.w   D0
-00005DE6  4840      17789          swap    D0
-00005DE8  80C1      17790          divu    D1,D0
-00005DEA  3400      17791          move.w  D0,D2
-00005DEC  301F      17792          move.w  (A7)+,D0
-00005DEE  80C1      17793          divu    D1,D0
-00005DF0  4840      17794          swap    D0
-00005DF2  4281      17795          clr.l   D1
-00005DF4  3200      17796          move.w  D0,D1
-00005DF6  3002      17797          move.w  D2,D0
-00005DF8  4840      17798          swap    D0
-00005DFA  341F      17799          move.w  (A7)+,D2
-00005DFC  4E75      17800          rts
-                    17801   dodiv_2:
-00005DFE  48E7 3800 17802          movem.l D2/D3/D4,-(A7)
-00005E02  2401      17803          move.l  D1,D2
-00005E04  4242      17804          clr.w   D2
-00005E06  4842      17805          swap    D2
-00005E08  5282      17806          addq.l  #1,D2
-00005E0A  2600      17807          move.l  D0,D3
-00005E0C  2801      17808          move.l  D1,D4
-00005E0E  2202      17809          move.l  D2,D1
-00005E10  61CE      17810          bsr.s   dodiv_1
-00005E12  2204      17811          move.l  D4,D1
-00005E14  82C2      17812          divu    D2,D1
-00005E16  80C1      17813          divu    D1,D0
-00005E18  0280 0000 17814          andi.l  #$FFFF,D0
-00005E1C  FFFF      
-                    17815   dodiv_3:
-00005E1E  2204      17816          move.l  D4,D1
-00005E20  2404      17817          move.l  D4,D2
-00005E22  4842      17818          swap    D2
-00005E24  C2C0      17819          mulu    D0,D1
-00005E26  C4C0      17820          mulu    D0,D2
-00005E28  4842      17821          swap    D2
-00005E2A  D282      17822          add.l   D2,D1
-00005E2C  9283      17823          sub.l   D3,D1
-00005E2E  620A      17824          bhi.s   dodiv_4
-00005E30  4481      17825          neg.l   D1
-00005E32  B881      17826          cmp.l   D1,D4
-00005E34  6208      17827          bhi.s   dodiv_5
-00005E36  5280      17828          addq.l  #1,D0
-00005E38  60E4      17829          bra.s   dodiv_3
-                    17830   dodiv_4:
-00005E3A  5380      17831          subq.l  #1,D0
-00005E3C  60E0      17832          bra.s   dodiv_3
-                    17833   dodiv_5:
-00005E3E  4CDF 001C 17834          movem.l (A7)+,D2/D3/D4
-00005E42  4E75      17835          rts
-                    17836          section   const
-          0000 5E44 17837   const      equ         *				; consts start whever the linker groups them, after the code section (but still in rom)
-                    17838   
-                    17839   @ucos_ii_1:
-00005E44  3F00      17840          dc.b      63,0
-                    17841   @ucos_ii_2:
-00005E46  7543 2F4F 17842          dc.b      117,67,47,79,83,45,73,73,32,73,100,108,101,0
-00005E4A  532D 4949 
-00005E4E  2049 646C 
-00005E52  6500      
-                    17843   @ucos_ii_3:
-00005E54  7543 2F4F 17844          dc.b      117,67,47,79,83,45,73,73,32,83,116,97,116,0
-00005E58  532D 4949 
-00005E5C  2053 7461 
-00005E60  7400      
-                    17845   @ucos_ii_4:
-00005E62  7543 2F4F 17846          dc.b      117,67,47,79,83,45,73,73,32,84,109,114,76,111
-00005E66  532D 4949 
-00005E6A  2054 6D72 
-00005E6E  4C6F      
-00005E70  636B 00   17847          dc.b      99,107,0
-                    17848   @ucos_ii_5:
-00005E74  7543 2F4F 17849          dc.b      117,67,47,79,83,45,73,73,32,84,109,114,83,105
-00005E78  532D 4949 
-00005E7C  2054 6D72 
-00005E80  5369      
-00005E82  676E 616C 17850          dc.b      103,110,97,108,0
-00005E86  00        
-                    17851   @ucos_ii_6:
-00005E88  7543 2F4F 17852          dc.b      117,67,47,79,83,45,73,73,32,84,109,114,0
-00005E8C  532D 4949 
-00005E90  2054 6D72 
-00005E94  00        
-                    17853   _OSUnMapTbl:
-00005E96  0000 0100 17854          dc.b      0,0,1,0,2,0,1,0,3,0,1,0,2,0,1,0,4,0,1,0,2,0
-00005E9A  0200 0100 
-00005E9E  0300 0100 
-00005EA2  0200 0100 
-00005EA6  0400 0100 
-00005EAA  0200      
-00005EAC  0100 0300 17855          dc.b      1,0,3,0,1,0,2,0,1,0,5,0,1,0,2,0,1,0,3,0,1,0
-00005EB0  0100 0200 
-00005EB4  0100 0500 
-00005EB8  0100 0200 
-00005EBC  0100 0300 
-00005EC0  0100      
-00005EC2  0200 0100 17856          dc.b      2,0,1,0,4,0,1,0,2,0,1,0,3,0,1,0,2,0,1,0,6,0
-00005EC6  0400 0100 
-00005ECA  0200 0100 
-00005ECE  0300 0100 
-00005ED2  0200 0100 
-00005ED6  0600      
-00005ED8  0100 0200 17857          dc.b      1,0,2,0,1,0,3,0,1,0,2,0,1,0,4,0,1,0,2,0,1,0
-00005EDC  0100 0300 
-00005EE0  0100 0200 
-00005EE4  0100 0400 
-00005EE8  0100 0200 
-00005EEC  0100      
-00005EEE  0300 0100 17858          dc.b      3,0,1,0,2,0,1,0,5,0,1,0,2,0,1,0,3,0,1,0,2,0
-00005EF2  0200 0100 
-00005EF6  0500 0100 
-00005EFA  0200 0100 
-00005EFE  0300 0100 
-00005F02  0200      
-00005F04  0100 0400 17859          dc.b      1,0,4,0,1,0,2,0,1,0,3,0,1,0,2,0,1,0,7,0,1,0
-00005F08  0100 0200 
-00005F0C  0100 0300 
-00005F10  0100 0200 
-00005F14  0100 0700 
-00005F18  0100      
-00005F1A  0200 0100 17860          dc.b      2,0,1,0,3,0,1,0,2,0,1,0,4,0,1,0,2,0,1,0,3,0
-00005F1E  0300 0100 
-00005F22  0200 0100 
-00005F26  0400 0100 
-00005F2A  0200 0100 
-00005F2E  0300      
-00005F30  0100 0200 17861          dc.b      1,0,2,0,1,0,5,0,1,0,2,0,1,0,3,0,1,0,2,0,1,0
-00005F34  0100 0500 
-00005F38  0100 0200 
-00005F3C  0100 0300 
-00005F40  0100 0200 
-00005F44  0100      
-00005F46  0400 0100 17862          dc.b      4,0,1,0,2,0,1,0,3,0,1,0,2,0,1,0,6,0,1,0,2,0
-00005F4A  0200 0100 
-00005F4E  0300 0100 
-00005F52  0200 0100 
-00005F56  0600 0100 
-00005F5A  0200      
-00005F5C  0100 0300 17863          dc.b      1,0,3,0,1,0,2,0,1,0,4,0,1,0,2,0,1,0,3,0,1,0
-00005F60  0100 0200 
-00005F64  0100 0400 
-00005F68  0100 0200 
-00005F6C  0100 0300 
-00005F70  0100      
-00005F72  0200 0100 17864          dc.b      2,0,1,0,5,0,1,0,2,0,1,0,3,0,1,0,2,0,1,0,4,0
-00005F76  0500 0100 
-00005F7A  0200 0100 
-00005F7E  0300 0100 
-00005F82  0200 0100 
-00005F86  0400      
-00005F88  0100 0200 17865          dc.b      1,0,2,0,1,0,3,0,1,0,2,0,1,0
-00005F8C  0100 0300 
-00005F90  0100 0200 
-00005F94  0100      
-                    17866          section   data
-          0000 5F96 17867   end_ROM    equ         *				; end of rom is wherever the last code/constant appears (* means here)
-                    17868   
-08000000            17869              org         RAM				; starting at address $08000000
-          0800 0000 17870   begin_RAM  equ         *				; begin ram starts here
-          0800 0000 17871   data       equ         *				; data starts here also
-                    17872   
-                    17873          section   bss
-          0800 0000 17874   bss        equ         *
-                    17875   
-                    17876   ;           org         $0B000000               Ram based vector table must be stored here otherwise InstallException Handler will not work
-                    17877   
-                    17878   *********************************************************************************************************
-                    17879   * Build a ram based vector table for interrupts so we can install our own Exception Handlers in C code at run time
-                    17880   * install the exception handler using the C function InstallExceptionHandler()
-                    17881   *********************************************************************************************************
-                    17882   
-08000000            17883   VInitialSP       ds.l    1      dummy as we can't really install a handler for this
-08000004            17884   VInitialPC       ds.l    1      dummy as we can't reallin install a handler for this
-08000008            17885   VBusError        ds.l    1      storage for address of Bus Error Handler
-0800000C            17886   VAddressError    ds.l    1      storage for address of Address Error Handler
-08000010            17887   VIllegalInstr    ds.l    1      storage for address of Illegal Instruction handler
-08000014            17888   VDividebyZero    ds.l    1      storage for address of divide by zero handler
-08000018            17889   VCheck           ds.l    1      ditto
-0800001C            17890   VTrapV           ds.l    1      ditto
-08000020            17891   VPrivilege       ds.l    1      ditto
-08000024            17892   VTrace           ds.l    1
-08000028            17893   VLine1010emul    ds.l    1
-0800002C            17894   VLine1111emul    ds.l    1
-08000030            17895   VUnassigned1     ds.l    1
-08000034            17896   VUnassigned2     ds.l    1
-08000038            17897   VUnassigned3     ds.l    1
-0800003C            17898   VUninit_IRQ      ds.l    1
-08000040            17899   VUnassigned4     ds.l    1
-08000044            17900   VUnassigned5     ds.l    1
-08000048            17901   VUnassigned6     ds.l    1
-0800004C            17902   VUnassigned7     ds.l    1
-08000050            17903   VUnassigned8     ds.l    1
-08000054            17904   VUnassigned9     ds.l    1
-08000058            17905   VUnassigned10    ds.l    1
-0800005C            17906   VUnassigned11    ds.l    1
-08000060            17907   VSpuriousIRQ     ds.l    1
-                    17908   
-                    17909   * Interrupt handlers Vector 25-31
-08000064            17910   VL1IRQ           ds.l    1       storage for 4 byte address of IRQ handler in your C program - install the handler using the C function InstallExceptionHandler()
-08000068            17911   VL2IRQ           ds.l    1       storage for 4 byte address of IRQ handler in your C program - install the handler using the C function InstallExceptionHandler()
-0800006C            17912   VL3IRQ           ds.l    1       storage for 4 byte address of IRQ handler in your C program - install the handler using the C function InstallExceptionHandler()
-08000070            17913   VL4IRQ           ds.l    1       storage for 4 byte address of IRQ handler in your C program - install the handler using the C function InstallExceptionHandler()
-08000074            17914   VL5IRQ           ds.l    1       storage for 4 byte address of IRQ handler in your C program - install the handler using the C function InstallExceptionHandler()
-08000078            17915   VL6IRQ           ds.l    1       storage for 4 byte address of IRQ handler in your C program - install the handler using the C function InstallExceptionHandler()
-0800007C            17916   VL7IRQ           ds.l    1       storage for 4 byte address of IRQ handler in your C program - install the handler using the C function InstallExceptionHandler()
-                    17917   
-                    17918   * Trap Handler vectors 32-47
-08000080            17919   VTrap0           ds.l   1        storage for 4 byte address of TRAP handler in your C program - install the handler using the C function InstallExceptionHandler()
-08000084            17920   VTrap1           ds.l   1        storage for 4 byte address of TRAP handler in your C program - install the handler using the C function InstallExceptionHandler()
-08000088            17921   VTrap2           ds.l   1        storage for 4 byte address of TRAP handler in your C program - install the handler using the C function InstallExceptionHandler()
-0800008C            17922   VTrap3           ds.l   1        storage for 4 byte address of TRAP handler in your C program - install the handler using the C function InstallExceptionHandler()
-08000090            17923   VTrap4           ds.l   1        storage for 4 byte address of TRAP handler in your C program - install the handler using the C function InstallExceptionHandler()
-08000094            17924   VTrap5           ds.l   1        storage for 4 byte address of TRAP handler in your C program - install the handler using the C function InstallExceptionHandler()
-08000098            17925   VTrap6           ds.l   1        storage for 4 byte address of TRAP handler in your C program - install the handler using the C function InstallExceptionHandler()
-0800009C            17926   VTrap7           ds.l   1        storage for 4 byte address of TRAP handler in your C program - install the handler using the C function InstallExceptionHandler()
-080000A0            17927   VTrap8           ds.l   1        storage for 4 byte address of TRAP handler in your C program - install the handler using the C function InstallExceptionHandler()
-080000A4            17928   VTrap9           ds.l   1        storage for 4 byte address of TRAP handler in your C program - install the handler using the C function InstallExceptionHandler()
-080000A8            17929   VTrap10          ds.l   1        storage for 4 byte address of TRAP handler in your C program - install the handler using the C function InstallExceptionHandler()
-080000AC            17930   VTrap11          ds.l   1        storage for 4 byte address of TRAP handler in your C program - install the handler using the C function InstallExceptionHandler()
-080000B0            17931   VTrap12          ds.l   1        storage for 4 byte address of TRAP handler in your C program - install the handler using the C function InstallExceptionHandler()
-080000B4            17932   VTrap13          ds.l   1        storage for 4 byte address of TRAP handler in your C program - install the handler using the C function InstallExceptionHandler()
-080000B8            17933   VTrap14          ds.l   1        storage for 4 byte address of TRAP handler in your C program - install the handler using the C function InstallExceptionHandler()
-080000BC            17934   VTrap15          ds.l   1        storage for 4 byte address of TRAP handler in your C program - install the handler using the C function InstallExceptionHandler()
-                    17935   
-                    17936   __ungetbuf:                            ; ungetbuffer for stdio functions
-080000C0            17937              ds.l        1
-                    17938   __timezone:                            ; difference, in seconds, between local time and UTC
-080000C4            17939              ds.l        1
-                    17940   __daylight:                            ; flag, '1' for daylight saving time, '0' for standard time.
-080000C8            17941              ds.l        1
-                    17942   __romsize:                             ; size of ROM used by program
-080000CC            17943              ds.l        1
-                    17944   __ramsize:                             ; size of RAM used by program
-080000D0            17945              ds.l        1
-                    17946   
-                    17947   _OSTmrTickCtr:
-080000D4            17948          ds.b      1
-                    17949   _OSCtxSwCtr:
-080000D6            17950          ds.b      4
-                    17951   _OSEventFreeList:
-080000DA            17952          ds.b      4
-                    17953   _OSEventTbl:
-080000DE            17954          ds.b      220
-                    17955   _OSFlagTbl:
-080001BA            17956          ds.b      60
-                    17957   _OSFlagFreeList:
-080001F6            17958          ds.b      4
-                    17959   _OSCPUUsage:
-080001FA            17960          ds.b      1
-                    17961   _OSIdleCtrMax:
-080001FC            17962          ds.b      4
-                    17963   _OSIdleCtrRun:
-08000200            17964          ds.b      4
-                    17965   _OSStatRdy:
-08000204            17966          ds.b      1
-                    17967   _OSTaskStatStk:
-08000206            17968          ds.b      256
-                    17969   _OSIntNesting:
-08000306            17970          ds.b      1
-                    17971   _OSLockNesting:
-08000308            17972          ds.b      1
-                    17973   _OSPrioCur:
-0800030A            17974          ds.b      1
-                    17975   _OSPrioHighRdy:
-0800030C            17976          ds.b      1
-                    17977   _OSRdyGrp:
-0800030E            17978          ds.b      1
-                    17979   _OSRdyTbl:
-08000310            17980          ds.b      8
-                    17981   _OSRunning:
-08000318            17982          ds.b      1
-                    17983   _OSTaskCtr:
-0800031A            17984          ds.b      1
-                    17985   _OSIdleCtr:
-0800031C            17986          ds.b      4
-                    17987   _OSTaskIdleStk:
-08000320            17988          ds.b      256
-                    17989   _OSTCBCur:
-08000420            17990          ds.b      4
-                    17991   _OSTCBFreeList:
-08000424            17992          ds.b      4
-                    17993   _OSTCBHighRdy:
-08000428            17994          ds.b      4
-                    17995   _OSTCBList:
-0800042C            17996          ds.b      4
-                    17997   _OSTCBPrioTbl:
-08000430            17998          ds.b      256
-                    17999   _OSTCBTbl:
-08000530            18000          ds.b      1892
-                    18001   _OSMemFreeList:
-08000C94            18002          ds.b      4
-                    18003   _OSMemTbl:
-08000C98            18004          ds.b      120
-                    18005   _OSQFreeList:
-08000D10            18006          ds.b      4
-                    18007   _OSQTbl:
-08000D14            18008          ds.b      96
-                    18009   _OSTaskRegNextAvailID:
-08000D74            18010          ds.b      1
-                    18011   _OSTime:
-08000D76            18012          ds.b      4
-                    18013   _OSTmrFree:
-08000D7A            18014          ds.b      2
-                    18015   _OSTmrUsed:
-08000D7C            18016          ds.b      2
-                    18017   _OSTmrTime:
-08000D7E            18018          ds.b      4
-                    18019   _OSTmrSem:
-08000D82            18020          ds.b      4
-                    18021   _OSTmrSemSignal:
-08000D86            18022          ds.b      4
-                    18023   _OSTmrTbl:
-08000D8A            18024          ds.b      576
-                    18025   _OSTmrFreeList:
-08000FCA            18026          ds.b      4
-                    18027   _OSTmrTaskStk:
-08000FCE            18028          ds.b      256
-                    18029   _OSTmrWheelTbl:
-080010CE            18030          ds.b      32
-                    18031   _Task1Stk:
-080010EE            18032          ds.b      512
-                    18033   _Task2Stk:
-080012EE            18034          ds.b      512
-                    18035   _Task3Stk:
-080014EE            18036          ds.b      512
-                    18037   _Task4Stk:
-080016EE            18038          ds.b      512
-                    18039          section   heap
-          0800 18EE 18040   end_RAM    equ         *				; wherever the program variables end, is the start of the heap
-          0800 18EE 18041   heap       equ         *
-                    18042   
-          0801 0000 18043   __stack    equ         RAM+RAMsize     ; stack for main function, no longer needed after OSStart() is called
+                    17498   ; #include <string.h>
+                    17499   ; #include <ctype.h>
+                    17500   ; #include <stdlib.h>
+                    17501   ; #include <Bios.h>
+                    17502   ; #include <ucos_ii.h>
+                    17503   ; #define STACKSIZE 256
+                    17504   ; /*
+                    17505   ; ** Stacks for each task are allocated here in the application in this case = 256 bytes
+                    17506   ; ** but you can change size if required
+                    17507   ; */
+                    17508   ; OS_STK Task1Stk[STACKSIZE];
+                    17509   ; OS_STK Task2Stk[STACKSIZE];
+                    17510   ; OS_STK Task3Stk[STACKSIZE];
+                    17511   ; OS_STK Task4Stk[STACKSIZE];
+                    17512   ; /* Prototypes for our tasks/threads*/
+                    17513   ; void Task1(void *); /* (void *) means the child task expects no data from parent*/
+                    17514   ; void Task2(void *);
+                    17515   ; void Task3(void *);
+                    17516   ; void Task4(void *);
+                    17517   ; /*
+                    17518   ; ** Our main application which has to
+                    17519   ; ** 1) Initialise any peripherals on the board, e.g. RS232 for hyperterminal + LCD
+                    17520   ; ** 2) Call OSInit() to initialise the OS
+                    17521   ; ** 3) Create our application task/threads
+                    17522   ; ** 4) Call OSStart()
+                    17523   ; */
+                    17524   ; void main(void)
+                    17525   ; {
+                    17526   _main:
+00005BCE  2F0A      17527          move.l    A2,-(A7)
+00005BD0  45F8 4476 17528          lea       _OSTaskCreate.L,A2
+                    17529   ; // initialise board hardware by calling our routines from the BIOS.C source file
+                    17530   ; Init_RS232();
+00005BD4  4EB8 5A1C 17531          jsr       _Init_RS232
+                    17532   ; Init_LCD();
+00005BD8  4EB8 5AD4 17533          jsr       _Init_LCD
+                    17534   ; /* display welcome message on LCD display */
+                    17535   ; //Oline0('c');
+                    17536   ; //Oline1("Micrium uC/OS-II RTOS");
+                    17537   ; OSInit(); // call to initialise the OS
+00005BDC  4EB8 0D3E 17538          jsr       _OSInit
+                    17539   ; /*
+                    17540   ; ** Now create the 4 child tasks and pass them no data.
+                    17541   ; ** the smaller the numerical priority value, the higher the task priority
+                    17542   ; */
+                    17543   ; OSTaskCreate(Task1, OS_NULL, &Task1Stk[STACKSIZE], 12);
+00005BE0  4878 000C 17544          pea       12
+00005BE4  41F9 0800 17545          lea       _Task1Stk.L,A0
+00005BE8  10EE      
+00005BEA  D0FC 0200 17546          add.w     #512,A0
+00005BEE  2F08      17547          move.l    A0,-(A7)
+00005BF0  42A7      17548          clr.l     -(A7)
+00005BF2  4879 0000 17549          pea       _Task1.L
+00005BF6  5C60      
+00005BF8  4E92      17550          jsr       (A2)
+00005BFA  DEFC 0010 17551          add.w     #16,A7
+                    17552   ; OSTaskCreate(Task2, OS_NULL, &Task2Stk[STACKSIZE], 11); // highest priority task
+00005BFE  4878 000B 17553          pea       11
+00005C02  41F9 0800 17554          lea       _Task2Stk.L,A0
+00005C06  12EE      
+00005C08  D0FC 0200 17555          add.w     #512,A0
+00005C0C  2F08      17556          move.l    A0,-(A7)
+00005C0E  42A7      17557          clr.l     -(A7)
+00005C10  4879 0000 17558          pea       _Task2.L
+00005C14  5CB0      
+00005C16  4E92      17559          jsr       (A2)
+00005C18  DEFC 0010 17560          add.w     #16,A7
+                    17561   ; OSTaskCreate(Task3, OS_NULL, &Task3Stk[STACKSIZE], 13);
+00005C1C  4878 000D 17562          pea       13
+00005C20  41F9 0800 17563          lea       _Task3Stk.L,A0
+00005C24  14EE      
+00005C26  D0FC 0200 17564          add.w     #512,A0
+00005C2A  2F08      17565          move.l    A0,-(A7)
+00005C2C  42A7      17566          clr.l     -(A7)
+00005C2E  4879 0000 17567          pea       _Task3.L
+00005C32  5CCC      
+00005C34  4E92      17568          jsr       (A2)
+00005C36  DEFC 0010 17569          add.w     #16,A7
+                    17570   ; OSTaskCreate(Task4, OS_NULL, &Task4Stk[STACKSIZE], 14); // lowest priority task
+00005C3A  4878 000E 17571          pea       14
+00005C3E  41F9 0800 17572          lea       _Task4Stk.L,A0
+00005C42  16EE      
+00005C44  D0FC 0200 17573          add.w     #512,A0
+00005C48  2F08      17574          move.l    A0,-(A7)
+00005C4A  42A7      17575          clr.l     -(A7)
+00005C4C  4879 0000 17576          pea       _Task4.L
+00005C50  5CF6      
+00005C52  4E92      17577          jsr       (A2)
+00005C54  DEFC 0010 17578          add.w     #16,A7
+                    17579   ; OSStart(); // call to start the OS scheduler, (never returns from this function)
+00005C58  4EB8 0EA6 17580          jsr       _OSStart
+00005C5C  245F      17581          move.l    (A7)+,A2
+00005C5E  4E75      17582          rts
+                    17583   ; }
+                    17584   ; /*
+                    17585   ; ** IMPORTANT : Timer 1 interrupts must be started by the highest priority task
+                    17586   ; ** that runs first which is Task2
+                    17587   ; */
+                    17588   ; void Task1(void *pdata)
+                    17589   ; {
+                    17590   _Task1:
+00005C60  4E56 0000 17591          link      A6,#0
+00005C64  48E7 3000 17592          movem.l   D2/D3,-(A7)
+                    17593   ; int LOWER_HEX_COUNT = 0;
+00005C68  4282      17594          clr.l     D2
+                    17595   ; int UPPER_HEX_COUNT = 0;
+00005C6A  4283      17596          clr.l     D3
+                    17597   ; HEX_B = UPPER_HEX_COUNT;
+00005C6C  13C3 0040 17598          move.b    D3,4194322
+00005C70  0012      
+                    17599   ; HEX_A = LOWER_HEX_COUNT;
+00005C72  13C2 0040 17600          move.b    D2,4194320
+00005C76  0010      
+                    17601   ; for (;;) {
+                    17602   Task1_1:
+                    17603   ; if (LOWER_HEX_COUNT == 99) {
+00005C78  0C82 0000 17604          cmp.l     #99,D2
+00005C7C  0063      
+00005C7E  6612      17605          bne.s     Task1_4
+                    17606   ; HEX_B = ++UPPER_HEX_COUNT;
+00005C80  5283      17607          addq.l    #1,D3
+00005C82  13C3 0040 17608          move.b    D3,4194322
+00005C86  0012      
+                    17609   ; LOWER_HEX_COUNT = 0;
+00005C88  4282      17610          clr.l     D2
+                    17611   ; HEX_A = LOWER_HEX_COUNT;
+00005C8A  13C2 0040 17612          move.b    D2,4194320
+00005C8E  0010      
+00005C90  600A      17613          bra.s     Task1_5
+                    17614   Task1_4:
+                    17615   ; } else {
+                    17616   ; HEX_A = LOWER_HEX_COUNT++;
+00005C92  2002      17617          move.l    D2,D0
+00005C94  5282      17618          addq.l    #1,D2
+00005C96  13C0 0040 17619          move.b    D0,4194320
+00005C9A  0010      
+                    17620   Task1_5:
+                    17621   ; }
+                    17622   ; printf("This is Task #1\n");
+                    17623          pea       @6a-mul~1_1.L
+********  **** ****  Error: Operand error
+00005C9C  4EB9 0000 17624          jsr       _printf
+00005CA0  5E8C      
+00005CA2  584F      17625          addq.w    #4,A7
+                    17626   ; OSTimeDly(50);
+00005CA4  4878 0032 17627          pea       50
+00005CA8  4EB8 4DD6 17628          jsr       _OSTimeDly
+00005CAC  584F      17629          addq.w    #4,A7
+00005CAE  60C8      17630          bra       Task1_1
+                    17631   ; }
+                    17632   ; }
+                    17633   ; /*
+                    17634   ; ** Task 2 below was created with the highest priority so it must start timer1
+                    17635   ; ** so that it produces interrupts for the 100hz context switches
+                    17636   ; */
+                    17637   ; void Task2(void *pdata)
+                    17638   ; {
+                    17639   _Task2:
+00005CB0  4E56 0000 17640          link      A6,#0
+                    17641   ; // must start timer ticker here
+                    17642   ; Timer1_Init() ; // this function is in BIOS.C and written by us to start timer
+00005CB4  4EB8 5BBC 17643          jsr       _Timer1_Init
+                    17644   ; for (;;) {
+                    17645   Task2_1:
+                    17646   ; printf("....This is Task #2\n");
+                    17647          pea       @6a-mul~1_2.L
+********  **** ****  Error: Operand error
+00005CB8  4EB9 0000 17648          jsr       _printf
+00005CBC  5E8C      
+00005CBE  584F      17649          addq.w    #4,A7
+                    17650   ; OSTimeDly(10);
+00005CC0  4878 000A 17651          pea       10
+00005CC4  4EB8 4DD6 17652          jsr       _OSTimeDly
+00005CC8  584F      17653          addq.w    #4,A7
+00005CCA  60EC      17654          bra       Task2_1
+                    17655   ; }
+                    17656   ; }
+                    17657   ; void Task3(void *pdata)
+                    17658   ; {
+                    17659   _Task3:
+00005CCC  4E56 FFFC 17660          link      A6,#-4
+                    17661   ; int LED_COUNT = 0;
+00005CD0  42AE FFFC 17662          clr.l     -4(A6)
+                    17663   ; for (;;) {
+                    17664   Task3_1:
+                    17665   ; printf("........This is Task #3\n");
+                    17666          pea       @6a-mul~1_3.L
+********  **** ****  Error: Operand error
+00005CD4  4EB9 0000 17667          jsr       _printf
+00005CD8  5E8C      
+00005CDA  584F      17668          addq.w    #4,A7
+                    17669   ; PortA = LED_COUNT++;
+00005CDC  202E FFFC 17670          move.l    -4(A6),D0
+00005CE0  52AE FFFC 17671          addq.l    #1,-4(A6)
+00005CE4  13C0 0040 17672          move.b    D0,4194304
+00005CE8  0000      
+                    17673   ; OSTimeDly(10);
+00005CEA  4878 000A 17674          pea       10
+00005CEE  4EB8 4DD6 17675          jsr       _OSTimeDly
+00005CF2  584F      17676          addq.w    #4,A7
+00005CF4  60DE      17677          bra       Task3_1
+                    17678   ; }
+                    17679   ; }
+                    17680   ; void Task4(void *pdata)
+                    17681   ; {
+                    17682   _Task4:
+00005CF6  4E56 0000 17683          link      A6,#0
+                    17684   ; for (;;) {
+                    17685   Task4_1:
+                    17686   ; printf("............This is Task #4\n");
+                    17687          pea       @6a-mul~1_4.L
+********  **** ****  Error: Operand error
+00005CFA  4EB9 0000 17688          jsr       _printf
+00005CFE  5E8C      
+00005D00  584F      17689          addq.w    #4,A7
+                    17690   ; OSTimeDly(50);
+00005D02  4878 0032 17691          pea       50
+00005D06  4EB8 4DD6 17692          jsr       _OSTimeDly
+00005D0A  584F      17693          addq.w    #4,A7
+00005D0C  60EC      17694          bra       Task4_1
+                    17695   ; }
+                    17696   ; }
+                    17697   ULMUL:
+00005D0E  4E56 0000 17698          link    A6,#0
+00005D12  48E7 C000 17699          movem.l D0/D1,-(A7)
+00005D16  222E 0008 17700          move.l  8(A6),D1
+00005D1A  202E 000C 17701          move.l  12(A6),D0
+00005D1E  602C      17702          bra.s   lmul_3
+                    17703   LMUL:
+00005D20  4E56 0000 17704          link    A6,#0
+00005D24  48E7 C000 17705          movem.l D0/D1,-(A7)
+00005D28  222E 0008 17706          move.l  8(A6),D1
+00005D2C  202E 000C 17707          move.l  12(A6),D0
+00005D30  4A80      17708          tst.l   D0
+00005D32  6A0A      17709          bpl.s   lmul_1
+00005D34  4480      17710          neg.l   D0
+00005D36  4A81      17711          tst.l   D1
+00005D38  6A0A      17712          bpl.s   lmul_2
+00005D3A  4481      17713          neg.l   D1
+00005D3C  600E      17714          bra.s   lmul_3
+                    17715   lmul_1:
+00005D3E  4A81      17716          tst.l   D1
+00005D40  6A0A      17717          bpl.s   lmul_3
+00005D42  4481      17718          neg.l   D1
+                    17719   lmul_2:
+00005D44  6114      17720          bsr.s   domul
+00005D46  4481      17721          neg.l   D1
+00005D48  4080      17722          negx.l  D0
+00005D4A  6002      17723          bra.s   lmul_4
+                    17724   lmul_3:
+00005D4C  610C      17725          bsr.s   domul
+                    17726   lmul_4:
+00005D4E  2D41 0008 17727          move.l  D1,8(A6)
+00005D52  4CDF 0003 17728          movem.l (A7)+,D0/D1
+00005D56  4E5E      17729          unlk    A6
+00005D58  4E75      17730          rts
+                    17731   domul:
+00005D5A  0C81 0000 17732          cmpi.l  #$FFFF,D1
+00005D5E  FFFF      
+00005D60  620C      17733          bhi.s   domul_1
+00005D62  0C80 0000 17734          cmpi.l  #$FFFF,D0
+00005D66  FFFF      
+00005D68  620E      17735          bhi.s   domul_2
+00005D6A  C2C0      17736          mulu    D0,D1
+00005D6C  4E75      17737          rts
+                    17738   domul_1:
+00005D6E  0C80 0000 17739          cmpi.l  #$FFFF,D0
+00005D72  FFFF      
+00005D74  6218      17740          bhi.s   domul_4
+00005D76  6002      17741          bra.s   domul_3
+                    17742   domul_2
+00005D78  C141      17743          exg     D0,D1
+                    17744   domul_3:
+00005D7A  2F02      17745          move.l  D2,-(A7)
+00005D7C  2401      17746          move.l  D1,D2
+00005D7E  4842      17747          swap    D2
+00005D80  C2C0      17748          mulu    D0,D1
+00005D82  C4C0      17749          mulu    D0,D2
+00005D84  4842      17750          swap    D2
+00005D86  4242      17751          clr.w   D2
+00005D88  D282      17752          add.l   D2,D1
+00005D8A  241F      17753          move.l  (A7)+,D2
+00005D8C  4E75      17754          rts
+                    17755   domul_4:
+00005D8E  48E7 3000 17756          movem.l D2/D3,-(A7)
+00005D92  2401      17757          move.l  D1,D2
+00005D94  2601      17758          move.l  D1,D3
+00005D96  C2C0      17759          mulu    D0,D1
+00005D98  4842      17760          swap    D2
+00005D9A  C4C0      17761          mulu    D0,D2
+00005D9C  4840      17762          swap    D0
+00005D9E  C6C0      17763          mulu    D0,D3
+00005DA0  D483      17764          add.l   D3,D2
+00005DA2  4842      17765          swap    D2
+00005DA4  4242      17766          clr.w   D2
+00005DA6  D282      17767          add.l   D2,D1
+00005DA8  4CDF 000C 17768          movem.l (A7)+,D2/D3
+00005DAC  4E75      17769          rts
+                    17770   ULDIV:
+00005DAE  4E56 0000 17771          link    A6,#0
+00005DB2  48E7 C000 17772          movem.l D0/D1,-(A7)
+00005DB6  222E 0008 17773          move.l  8(A6),D1
+00005DBA  202E 000C 17774          move.l  12(A6),D0
+00005DBE  6036      17775          bra.s   ldiv_3
+                    17776   LDIV:
+00005DC0  4E56 0000 17777          link    A6,#0
+00005DC4  48E7 C000 17778          movem.l D0/D1,-(A7)
+00005DC8  222E 0008 17779          move.l  8(A6),D1
+00005DCC  202E 000C 17780          move.l  12(A6),D0
+00005DD0  4A80      17781          tst.l   D0
+00005DD2  6A0E      17782          bpl.s   ldiv_1
+00005DD4  4480      17783          neg.l   D0
+00005DD6  4A81      17784          tst.l   D1
+00005DD8  6A14      17785          bpl.s   ldiv_2
+00005DDA  4481      17786          neg.l   D1
+00005DDC  612A      17787          bsr.s   dodiv
+00005DDE  4481      17788          neg.l   D1
+00005DE0  6016      17789          bra.s   ldiv_4
+                    17790   ldiv_1:
+00005DE2  4A81      17791          tst.l   D1
+00005DE4  6A10      17792          bpl.s   ldiv_3
+00005DE6  4481      17793          neg.l   D1
+00005DE8  611E      17794          bsr.s   dodiv
+00005DEA  4480      17795          neg.l   D0
+00005DEC  600A      17796          bra.s   ldiv_4
+                    17797   ldiv_2:
+00005DEE  6118      17798          bsr.s   dodiv
+00005DF0  4480      17799          neg.l   D0
+00005DF2  4481      17800          neg.l   D1
+00005DF4  6002      17801          bra.s   ldiv_4
+                    17802   ldiv_3:
+00005DF6  6110      17803          bsr.s   dodiv
+                    17804   ldiv_4:
+00005DF8  2D40 0008 17805          move.l  D0,8(A6)
+00005DFC  2D41 000C 17806          move.l  D1,12(A6)
+00005E00  4CDF 0003 17807          movem.l (A7)+,D0/D1
+00005E04  4E5E      17808          unlk    A6
+00005E06  4E75      17809          rts
+                    17810   dodiv:
+00005E08  0C81 0000 17811          cmpi.l  #$FFFF,D1
+00005E0C  FFFF      
+00005E0E  6236      17812          bhi.s   dodiv_2
+00005E10  0C80 0000 17813          cmpi.l  #$FFFF,D0
+00005E14  FFFF      
+00005E16  6210      17814          bhi.s   dodiv_1
+00005E18  80C1      17815          divu    D1,D0
+00005E1A  2200      17816          move.l  D0,D1
+00005E1C  4241      17817          clr.w   D1
+00005E1E  4841      17818          swap    D1
+00005E20  0280 0000 17819          andi.l  #$FFFF,D0
+00005E24  FFFF      
+00005E26  4E75      17820          rts
+                    17821   dodiv_1:
+00005E28  48A7 A000 17822          movem.w D0/D2,-(A7)
+00005E2C  4240      17823          clr.w   D0
+00005E2E  4840      17824          swap    D0
+00005E30  80C1      17825          divu    D1,D0
+00005E32  3400      17826          move.w  D0,D2
+00005E34  301F      17827          move.w  (A7)+,D0
+00005E36  80C1      17828          divu    D1,D0
+00005E38  4840      17829          swap    D0
+00005E3A  4281      17830          clr.l   D1
+00005E3C  3200      17831          move.w  D0,D1
+00005E3E  3002      17832          move.w  D2,D0
+00005E40  4840      17833          swap    D0
+00005E42  341F      17834          move.w  (A7)+,D2
+00005E44  4E75      17835          rts
+                    17836   dodiv_2:
+00005E46  48E7 3800 17837          movem.l D2/D3/D4,-(A7)
+00005E4A  2401      17838          move.l  D1,D2
+00005E4C  4242      17839          clr.w   D2
+00005E4E  4842      17840          swap    D2
+00005E50  5282      17841          addq.l  #1,D2
+00005E52  2600      17842          move.l  D0,D3
+00005E54  2801      17843          move.l  D1,D4
+00005E56  2202      17844          move.l  D2,D1
+00005E58  61CE      17845          bsr.s   dodiv_1
+00005E5A  2204      17846          move.l  D4,D1
+00005E5C  82C2      17847          divu    D2,D1
+00005E5E  80C1      17848          divu    D1,D0
+00005E60  0280 0000 17849          andi.l  #$FFFF,D0
+00005E64  FFFF      
+                    17850   dodiv_3:
+00005E66  2204      17851          move.l  D4,D1
+00005E68  2404      17852          move.l  D4,D2
+00005E6A  4842      17853          swap    D2
+00005E6C  C2C0      17854          mulu    D0,D1
+00005E6E  C4C0      17855          mulu    D0,D2
+00005E70  4842      17856          swap    D2
+00005E72  D282      17857          add.l   D2,D1
+00005E74  9283      17858          sub.l   D3,D1
+00005E76  620A      17859          bhi.s   dodiv_4
+00005E78  4481      17860          neg.l   D1
+00005E7A  B881      17861          cmp.l   D1,D4
+00005E7C  6208      17862          bhi.s   dodiv_5
+00005E7E  5280      17863          addq.l  #1,D0
+00005E80  60E4      17864          bra.s   dodiv_3
+                    17865   dodiv_4:
+00005E82  5380      17866          subq.l  #1,D0
+00005E84  60E0      17867          bra.s   dodiv_3
+                    17868   dodiv_5:
+00005E86  4CDF 001C 17869          movem.l (A7)+,D2/D3/D4
+00005E8A  4E75      17870          rts
+                    17871   _printf:
+00005E8C  4E56 FFFC 17872          link      A6,#-4
+00005E90  2F02      17873          move.l    D2,-(A7)
+00005E92  41EE 0008 17874          lea       8(A6),A0
+00005E96  5848      17875          addq.w    #4,A0
+00005E98  2408      17876          move.l    A0,D2
+00005E9A  2F02      17877          move.l    D2,-(A7)
+00005E9C  2F2E 0008 17878          move.l    8(A6),-(A7)
+00005EA0  42A7      17879          clr.l     -(A7)
+00005EA2  4EB9 0000 17880          jsr       _doprint
+00005EA6  5F62      
+00005EA8  DEFC 000C 17881          add.w     #12,A7
+00005EAC  2D40 FFFC 17882          move.l    D0,-4(A6)
+00005EB0  4282      17883          clr.l     D2
+00005EB2  202E FFFC 17884          move.l    -4(A6),D0
+00005EB6  241F      17885          move.l    (A7)+,D2
+00005EB8  4E5E      17886          unlk      A6
+00005EBA  4E75      17887          rts
+                    17888   @doprint_copy:
+00005EBC  4E56 0000 17889          link      A6,#0
+00005EC0  206E 0008 17890          move.l    8(A6),A0
+00005EC4  4A90      17891          tst.l     (A0)
+00005EC6  6710      17892          beq.s     @doprint_copy_1
+00005EC8  202E 000C 17893          move.l    12(A6),D0
+00005ECC  206E 0008 17894          move.l    8(A6),A0
+00005ED0  2250      17895          move.l    (A0),A1
+00005ED2  5290      17896          addq.l    #1,(A0)
+00005ED4  1280      17897          move.b    D0,(A1)
+00005ED6  600C      17898          bra.s     @doprint_copy_2
+                    17899   @doprint_copy_1:
+00005ED8  2F2E 000C 17900          move.l    12(A6),-(A7)
+00005EDC  4EB9 0000 17901          jsr       _putch
+00005EE0  6702      
+00005EE2  584F      17902          addq.w    #4,A7
+                    17903   @doprint_copy_2:
+00005EE4  4E5E      17904          unlk      A6
+00005EE6  4E75      17905          rts
+                    17906   @doprint_getval:
+00005EE8  4E56 0000 17907          link      A6,#0
+00005EEC  48E7 3000 17908          movem.l   D2/D3,-(A7)
+00005EF0  262E 0008 17909          move.l    8(A6),D3
+00005EF4  4282      17910          clr.l     D2
+00005EF6  2043      17911          move.l    D3,A0
+00005EF8  2050      17912          move.l    (A0),A0
+00005EFA  1010      17913          move.b    (A0),D0
+00005EFC  0C00 002A 17914          cmp.b     #42,D0
+00005F00  6612      17915          bne.s     @doprint_getval_1
+00005F02  206E 000C 17916          move.l    12(A6),A0
+00005F06  2250      17917          move.l    (A0),A1
+00005F08  5890      17918          addq.l    #4,(A0)
+00005F0A  2411      17919          move.l    (A1),D2
+00005F0C  2043      17920          move.l    D3,A0
+00005F0E  5290      17921          addq.l    #1,(A0)
+00005F10  6000 0046 17922          bra       @doprint_getval_5
+                    17923   @doprint_getval_1:
+00005F14  7001      17924          moveq     #1,D0
+00005F16  2043      17925          move.l    D3,A0
+00005F18  2050      17926          move.l    (A0),A0
+00005F1A  1210      17927          move.b    (A0),D1
+00005F1C  4881      17928          ext.w     D1
+00005F1E  48C1      17929          ext.l     D1
+00005F20  D081      17930          add.l     D1,D0
+00005F22  41F9 0000 17931          lea       __ctype.L,A0
+00005F26  6918      
+00005F28  1030 0800 17932          move.b    0(A0,D0.L),D0
+00005F2C  C03C 0004 17933          and.b     #4,D0
+00005F30  6726      17934          beq.s     @doprint_getval_5
+00005F32  2F02      17935          move.l    D2,-(A7)
+00005F34  4878 000A 17936          pea       10
+00005F38  4EB8 5D20 17937          jsr       LMUL
+00005F3C  2017      17938          move.l    (A7),D0
+00005F3E  504F      17939          addq.w    #8,A7
+00005F40  2043      17940          move.l    D3,A0
+00005F42  2250      17941          move.l    (A0),A1
+00005F44  5290      17942          addq.l    #1,(A0)
+00005F46  1211      17943          move.b    (A1),D1
+00005F48  4881      17944          ext.w     D1
+00005F4A  48C1      17945          ext.l     D1
+00005F4C  D081      17946          add.l     D1,D0
+00005F4E  0480 0000 17947          sub.l     #48,D0
+00005F52  0030      
+00005F54  2400      17948          move.l    D0,D2
+00005F56  60BC      17949          bra       @doprint_getval_1
+                    17950   @doprint_getval_5:
+00005F58  2002      17951          move.l    D2,D0
+00005F5A  4CDF 000C 17952          movem.l   (A7)+,D2/D3
+00005F5E  4E5E      17953          unlk      A6
+00005F60  4E75      17954          rts
+                    17955   _doprint:
+00005F62  4E56 FFCC 17956          link      A6,#-52
+00005F66  48E7 3F3C 17957          movem.l   D2/D3/D4/D5/D6/D7/A2/A3/A4/A5,-(A7)
+00005F6A  45EE 0008 17958          lea       8(A6),A2
+00005F6E  47F8 5EBC 17959          lea       @doprint_copy.L,A3
+00005F72  49F9 0000 17960          lea       _ultoa.L,A4
+00005F76  668E      
+00005F78  4286      17961          clr.l     D6
+                    17962   doprint_1:
+00005F7A  206E 000C 17963          move.l    12(A6),A0
+00005F7E  4A10      17964          tst.b     (A0)
+00005F80  6700 05EC 17965          beq       doprint_3
+00005F84  206E 000C 17966          move.l    12(A6),A0
+00005F88  1010      17967          move.b    (A0),D0
+00005F8A  0C00 0025 17968          cmp.b     #37,D0
+00005F8E  671C      17969          beq.s     doprint_4
+00005F90  206E 000C 17970          move.l    12(A6),A0
+00005F94  52AE 000C 17971          addq.l    #1,12(A6)
+00005F98  1210      17972          move.b    (A0),D1
+00005F9A  4881      17973          ext.w     D1
+00005F9C  48C1      17974          ext.l     D1
+00005F9E  2F01      17975          move.l    D1,-(A7)
+00005FA0  2F0A      17976          move.l    A2,-(A7)
+00005FA2  4E93      17977          jsr       (A3)
+00005FA4  504F      17978          addq.w    #8,A7
+00005FA6  5286      17979          addq.l    #1,D6
+00005FA8  6000 05C0 17980          bra       doprint_2
+                    17981   doprint_4:
+00005FAC  52AE 000C 17982          addq.l    #1,12(A6)
+00005FB0  422E FFD3 17983          clr.b     -45(A6)
+00005FB4  422E FFD2 17984          clr.b     -46(A6)
+00005FB8  422E FFD0 17985          clr.b     -48(A6)
+00005FBC  422E FFCF 17986          clr.b     -49(A6)
+00005FC0  422E FFCE 17987          clr.b     -50(A6)
+00005FC4  422E FFCD 17988          clr.b     -51(A6)
+00005FC8  42AE FFFC 17989          clr.l     -4(A6)
+00005FCC  7AFF      17990          moveq     #-1,D5
+00005FCE  41EE FFDC 17991          lea       -36(A6),A0
+00005FD2  2608      17992          move.l    A0,D3
+00005FD4  2408      17993          move.l    A0,D2
+                    17994   doprint_6:
+00005FD6  206E 000C 17995          move.l    12(A6),A0
+00005FDA  1010      17996          move.b    (A0),D0
+00005FDC  4880      17997          ext.w     D0
+00005FDE  48C0      17998          ext.l     D0
+00005FE0  0C80 0000 17999          cmp.l     #43,D0
+00005FE4  002B      
+00005FE6  6730      18000          beq.s     doprint_12
+00005FE8  6E18      18001          bgt.s     doprint_15
+00005FEA  0C80 0000 18002          cmp.l     #35,D0
+00005FEE  0023      
+00005FF0  6700 003E 18003          beq       doprint_14
+00005FF4  6E00 0046 18004          bgt       doprint_9
+00005FF8  0C80 0000 18005          cmp.l     #32,D0
+00005FFC  0020      
+00005FFE  6724      18006          beq.s     doprint_13
+00006000  603A      18007          bra.s     doprint_9
+                    18008   doprint_15:
+00006002  0C80 0000 18009          cmp.l     #45,D0
+00006006  002D      
+00006008  6702      18010          beq.s     doprint_11
+0000600A  6030      18011          bra.s     doprint_9
+                    18012   doprint_11:
+0000600C  1D7C 0001 18013          move.b    #1,-51(A6)
+00006010  FFCD      
+00006012  52AE 000C 18014          addq.l    #1,12(A6)
+00006016  6026      18015          bra.s     doprint_7
+                    18016   doprint_12:
+00006018  1D7C 0001 18017          move.b    #1,-50(A6)
+0000601C  FFCE      
+0000601E  52AE 000C 18018          addq.l    #1,12(A6)
+00006022  601A      18019          bra.s     doprint_7
+                    18020   doprint_13:
+00006024  1D7C 0001 18021          move.b    #1,-49(A6)
+00006028  FFCF      
+0000602A  52AE 000C 18022          addq.l    #1,12(A6)
+0000602E  600E      18023          bra.s     doprint_7
+                    18024   doprint_14:
+00006030  1D7C 0001 18025          move.b    #1,-48(A6)
+00006034  FFD0      
+00006036  52AE 000C 18026          addq.l    #1,12(A6)
+0000603A  6002      18027          bra.s     doprint_7
+                    18028   doprint_9:
+0000603C  6002      18029          bra.s     doprint_8
+                    18030   doprint_7:
+0000603E  6096      18031          bra       doprint_6
+                    18032   doprint_8:
+00006040  206E 000C 18033          move.l    12(A6),A0
+00006044  1010      18034          move.b    (A0),D0
+00006046  0C00 0030 18035          cmp.b     #48,D0
+0000604A  660A      18036          bne.s     doprint_16
+0000604C  52AE 000C 18037          addq.l    #1,12(A6)
+00006050  1D7C 0001 18038          move.b    #1,-46(A6)
+00006054  FFD2      
+                    18039   doprint_16:
+00006056  486E 0010 18040          pea       16(A6)
+0000605A  486E 000C 18041          pea       12(A6)
+0000605E  4EB8 5EE8 18042          jsr       @doprint_getval
+00006062  504F      18043          addq.w    #8,A7
+00006064  2A40      18044          move.l    D0,A5
+00006066  206E 000C 18045          move.l    12(A6),A0
+0000606A  1010      18046          move.b    (A0),D0
+0000606C  0C00 002E 18047          cmp.b     #46,D0
+00006070  6614      18048          bne.s     doprint_18
+00006072  52AE 000C 18049          addq.l    #1,12(A6)
+00006076  486E 0010 18050          pea       16(A6)
+0000607A  486E 000C 18051          pea       12(A6)
+0000607E  4EB8 5EE8 18052          jsr       @doprint_getval
+00006082  504F      18053          addq.w    #8,A7
+00006084  2A00      18054          move.l    D0,D5
+                    18055   doprint_18:
+00006086  206E 000C 18056          move.l    12(A6),A0
+0000608A  1010      18057          move.b    (A0),D0
+0000608C  0C00 006C 18058          cmp.b     #108,D0
+00006090  660A      18059          bne.s     doprint_20
+00006092  52AE 000C 18060          addq.l    #1,12(A6)
+00006096  1D7C 0001 18061          move.b    #1,-45(A6)
+0000609A  FFD3      
+                    18062   doprint_20:
+0000609C  206E 000C 18063          move.l    12(A6),A0
+000060A0  1010      18064          move.b    (A0),D0
+000060A2  4880      18065          ext.w     D0
+000060A4  48C0      18066          ext.l     D0
+000060A6  0C80 0000 18067          cmp.l     #111,D0
+000060AA  006F      
+000060AC  6700 00D8 18068          beq       doprint_27
+000060B0  6E34      18069          bgt.s     doprint_33
+000060B2  0C80 0000 18070          cmp.l     #100,D0
+000060B6  0064      
+000060B8  6700 0054 18071          beq       doprint_24
+000060BC  6E1C      18072          bgt.s     doprint_34
+000060BE  0C80 0000 18073          cmp.l     #99,D0
+000060C2  0063      
+000060C4  6700 0130 18074          beq       doprint_30
+000060C8  6E00 0174 18075          bgt       doprint_22
+000060CC  0C80 0000 18076          cmp.l     #88,D0
+000060D0  0058      
+000060D2  6700 00EA 18077          beq       doprint_28
+000060D6  6000 0166 18078          bra       doprint_22
+                    18079   doprint_34:
+000060DA  0C80 0000 18080          cmp.l     #105,D0
+000060DE  0069      
+000060E0  672C      18081          beq.s     doprint_24
+000060E2  6000 015A 18082          bra       doprint_22
+                    18083   doprint_33:
+000060E6  0C80 0000 18084          cmp.l     #117,D0
+000060EA  0075      
+000060EC  6700 0060 18085          beq       doprint_26
+000060F0  6E0E      18086          bgt.s     doprint_35
+000060F2  0C80 0000 18087          cmp.l     #115,D0
+000060F6  0073      
+000060F8  6700 0124 18088          beq       doprint_31
+000060FC  6000 0140 18089          bra       doprint_22
+                    18090   doprint_35:
+00006100  0C80 0000 18091          cmp.l     #120,D0
+00006104  0078      
+00006106  6700 00B6 18092          beq       doprint_28
+0000610A  6000 0132 18093          bra       doprint_22
+                    18094   doprint_24:
+0000610E  4A2E FFD3 18095          tst.b     -45(A6)
+00006112  671C      18096          beq.s     doprint_36
+00006114  4878 000A 18097          pea       10
+00006118  2F03      18098          move.l    D3,-(A7)
+0000611A  206E 0010 18099          move.l    16(A6),A0
+0000611E  58AE 0010 18100          addq.l    #4,16(A6)
+00006122  2F10      18101          move.l    (A0),-(A7)
+00006124  4EB9 0000 18102          jsr       _ltoa
+00006128  6608      
+0000612A  DEFC 000C 18103          add.w     #12,A7
+0000612E  601A      18104          bra.s     doprint_37
+                    18105   doprint_36:
+00006130  4878 000A 18106          pea       10
+00006134  2F03      18107          move.l    D3,-(A7)
+00006136  206E 0010 18108          move.l    16(A6),A0
+0000613A  58AE 0010 18109          addq.l    #4,16(A6)
+0000613E  2F10      18110          move.l    (A0),-(A7)
+00006140  4EB9 0000 18111          jsr       _ltoa
+00006144  6608      
+00006146  DEFC 000C 18112          add.w     #12,A7
+                    18113   doprint_37:
+0000614A  6000 0100 18114          bra       doprint_23
+                    18115   doprint_26:
+0000614E  4A2E FFD3 18116          tst.b     -45(A6)
+00006152  6718      18117          beq.s     doprint_38
+00006154  4878 000A 18118          pea       10
+00006158  2F03      18119          move.l    D3,-(A7)
+0000615A  206E 0010 18120          move.l    16(A6),A0
+0000615E  58AE 0010 18121          addq.l    #4,16(A6)
+00006162  2F10      18122          move.l    (A0),-(A7)
+00006164  4E94      18123          jsr       (A4)
+00006166  DEFC 000C 18124          add.w     #12,A7
+0000616A  6016      18125          bra.s     doprint_39
+                    18126   doprint_38:
+0000616C  4878 000A 18127          pea       10
+00006170  2F03      18128          move.l    D3,-(A7)
+00006172  206E 0010 18129          move.l    16(A6),A0
+00006176  58AE 0010 18130          addq.l    #4,16(A6)
+0000617A  2F10      18131          move.l    (A0),-(A7)
+0000617C  4E94      18132          jsr       (A4)
+0000617E  DEFC 000C 18133          add.w     #12,A7
+                    18134   doprint_39:
+00006182  6000 00C8 18135          bra       doprint_23
+                    18136   doprint_27:
+00006186  4A2E FFD3 18137          tst.b     -45(A6)
+0000618A  6718      18138          beq.s     doprint_40
+0000618C  4878 0008 18139          pea       8
+00006190  2F03      18140          move.l    D3,-(A7)
+00006192  206E 0010 18141          move.l    16(A6),A0
+00006196  58AE 0010 18142          addq.l    #4,16(A6)
+0000619A  2F10      18143          move.l    (A0),-(A7)
+0000619C  4E94      18144          jsr       (A4)
+0000619E  DEFC 000C 18145          add.w     #12,A7
+000061A2  6016      18146          bra.s     doprint_41
+                    18147   doprint_40:
+000061A4  4878 0008 18148          pea       8
+000061A8  2F03      18149          move.l    D3,-(A7)
+000061AA  206E 0010 18150          move.l    16(A6),A0
+000061AE  58AE 0010 18151          addq.l    #4,16(A6)
+000061B2  2F10      18152          move.l    (A0),-(A7)
+000061B4  4E94      18153          jsr       (A4)
+000061B6  DEFC 000C 18154          add.w     #12,A7
+                    18155   doprint_41:
+000061BA  6000 0090 18156          bra       doprint_23
+                    18157   doprint_28:
+000061BE  4A2E FFD3 18158          tst.b     -45(A6)
+000061C2  6718      18159          beq.s     doprint_42
+000061C4  4878 0010 18160          pea       16
+000061C8  2F03      18161          move.l    D3,-(A7)
+000061CA  206E 0010 18162          move.l    16(A6),A0
+000061CE  58AE 0010 18163          addq.l    #4,16(A6)
+000061D2  2F10      18164          move.l    (A0),-(A7)
+000061D4  4E94      18165          jsr       (A4)
+000061D6  DEFC 000C 18166          add.w     #12,A7
+000061DA  6016      18167          bra.s     doprint_43
+                    18168   doprint_42:
+000061DC  4878 0010 18169          pea       16
+000061E0  2F03      18170          move.l    D3,-(A7)
+000061E2  206E 0010 18171          move.l    16(A6),A0
+000061E6  58AE 0010 18172          addq.l    #4,16(A6)
+000061EA  2F10      18173          move.l    (A0),-(A7)
+000061EC  4E94      18174          jsr       (A4)
+000061EE  DEFC 000C 18175          add.w     #12,A7
+                    18176   doprint_43:
+000061F2  6000 0058 18177          bra       doprint_23
+                    18178   doprint_30:
+000061F6  206E 0010 18179          move.l    16(A6),A0
+000061FA  58AE 0010 18180          addq.l    #4,16(A6)
+000061FE  2010      18181          move.l    (A0),D0
+00006200  2042      18182          move.l    D2,A0
+00006202  5282      18183          addq.l    #1,D2
+00006204  1080      18184          move.b    D0,(A0)
+00006206  2042      18185          move.l    D2,A0
+00006208  4210      18186          clr.b     (A0)
+0000620A  200D      18187          move.l    A5,D0
+0000620C  6704      18188          beq.s     doprint_44
+0000620E  200D      18189          move.l    A5,D0
+00006210  6006      18190          bra.s     doprint_45
+                    18191   doprint_44:
+00006212  7001      18192          moveq     #1,D0
+00006214  4880      18193          ext.w     D0
+00006216  48C0      18194          ext.l     D0
+                    18195   doprint_45:
+00006218  2A00      18196          move.l    D0,D5
+0000621A  6000 0030 18197          bra       doprint_23
+                    18198   doprint_31:
+0000621E  206E 0010 18199          move.l    16(A6),A0
+00006222  58AE 0010 18200          addq.l    #4,16(A6)
+00006226  2610      18201          move.l    (A0),D3
+00006228  0C85 FFFF 18202          cmp.l     #-1,D5
+0000622C  FFFF      
+0000622E  660C      18203          bne.s     doprint_46
+00006230  2F03      18204          move.l    D3,-(A7)
+00006232  4EB9 0000 18205          jsr       _strlen
+00006236  66F0      
+00006238  584F      18206          addq.w    #4,A7
+0000623A  2A00      18207          move.l    D0,D5
+                    18208   doprint_46:
+0000623C  600E      18209          bra.s     doprint_23
+                    18210   doprint_22:
+0000623E  206E 000C 18211          move.l    12(A6),A0
+00006242  2242      18212          move.l    D2,A1
+00006244  5282      18213          addq.l    #1,D2
+00006246  1290      18214          move.b    (A0),(A1)
+00006248  2042      18215          move.l    D2,A0
+0000624A  4210      18216          clr.b     (A0)
+                    18217   doprint_23:
+0000624C  2F03      18218          move.l    D3,-(A7)
+0000624E  4EB9 0000 18219          jsr       _strlen
+00006252  66F0      
+00006254  584F      18220          addq.w    #4,A7
+00006256  1800      18221          move.b    D0,D4
+00006258  206E 000C 18222          move.l    12(A6),A0
+0000625C  1010      18223          move.b    (A0),D0
+0000625E  0C00 0073 18224          cmp.b     #115,D0
+00006262  661C      18225          bne.s     doprint_48
+00006264  0C85 0000 18226          cmp.l     #0,D5
+00006268  0000      
+0000626A  6D14      18227          blt.s     doprint_48
+0000626C  4884      18228          ext.w     D4
+0000626E  48C4      18229          ext.l     D4
+00006270  B885      18230          cmp.l     D5,D4
+00006272  6F04      18231          ble.s     doprint_50
+00006274  2005      18232          move.l    D5,D0
+00006276  6006      18233          bra.s     doprint_51
+                    18234   doprint_50:
+00006278  1004      18235          move.b    D4,D0
+0000627A  4880      18236          ext.w     D0
+0000627C  48C0      18237          ext.l     D0
+                    18238   doprint_51:
+0000627E  1800      18239          move.b    D0,D4
+                    18240   doprint_48:
+00006280  206E 000C 18241          move.l    12(A6),A0
+00006284  1010      18242          move.b    (A0),D0
+00006286  0C00 0058 18243          cmp.b     #88,D0
+0000628A  6600 0028 18244          bne       doprint_56
+0000628E  41EE FFDC 18245          lea       -36(A6),A0
+00006292  2408      18246          move.l    A0,D2
+                    18247   doprint_54:
+00006294  2042      18248          move.l    D2,A0
+00006296  4A10      18249          tst.b     (A0)
+00006298  671A      18250          beq.s     doprint_56
+0000629A  2042      18251          move.l    D2,A0
+0000629C  1210      18252          move.b    (A0),D1
+0000629E  4881      18253          ext.w     D1
+000062A0  48C1      18254          ext.l     D1
+000062A2  2F01      18255          move.l    D1,-(A7)
+000062A4  4EB9 0000 18256          jsr       _toupper
+000062A8  672E      
+000062AA  584F      18257          addq.w    #4,A7
+000062AC  2042      18258          move.l    D2,A0
+000062AE  1080      18259          move.b    D0,(A0)
+000062B0  5282      18260          addq.l    #1,D2
+000062B2  60E0      18261          bra       doprint_54
+                    18262   doprint_56:
+000062B4  7E00      18263          moveq     #0,D7
+000062B6  41EE FFD4 18264          lea       -44(A6),A0
+000062BA  2408      18265          move.l    A0,D2
+000062BC  206E 000C 18266          move.l    12(A6),A0
+000062C0  1010      18267          move.b    (A0),D0
+000062C2  0C00 0064 18268          cmp.b     #100,D0
+000062C6  670E      18269          beq.s     doprint_59
+000062C8  206E 000C 18270          move.l    12(A6),A0
+000062CC  1010      18271          move.b    (A0),D0
+000062CE  0C00 0069 18272          cmp.b     #105,D0
+000062D2  6600 0068 18273          bne       doprint_65
+                    18274   doprint_59:
+000062D6  102E FFCE 18275          move.b    -50(A6),D0
+000062DA  4880      18276          ext.w     D0
+000062DC  48C0      18277          ext.l     D0
+000062DE  4A80      18278          tst.l     D0
+000062E0  660C      18279          bne.s     doprint_62
+000062E2  2043      18280          move.l    D3,A0
+000062E4  1010      18281          move.b    (A0),D0
+000062E6  0C00 002D 18282          cmp.b     #45,D0
+000062EA  6600 0028 18283          bne       doprint_60
+                    18284   doprint_62:
+000062EE  2043      18285          move.l    D3,A0
+000062F0  1010      18286          move.b    (A0),D0
+000062F2  0C00 002D 18287          cmp.b     #45,D0
+000062F6  660E      18288          bne.s     doprint_63
+000062F8  2043      18289          move.l    D3,A0
+000062FA  5283      18290          addq.l    #1,D3
+000062FC  2242      18291          move.l    D2,A1
+000062FE  5282      18292          addq.l    #1,D2
+00006300  1290      18293          move.b    (A0),(A1)
+00006302  5304      18294          subq.b    #1,D4
+00006304  6008      18295          bra.s     doprint_64
+                    18296   doprint_63:
+00006306  2042      18297          move.l    D2,A0
+00006308  5282      18298          addq.l    #1,D2
+0000630A  10BC 002B 18299          move.b    #43,(A0)
+                    18300   doprint_64:
+0000630E  5287      18301          addq.l    #1,D7
+00006310  6000 002A 18302          bra       doprint_65
+                    18303   doprint_60:
+00006314  4A2E FFCF 18304          tst.b     -49(A6)
+00006318  6722      18305          beq.s     doprint_65
+0000631A  2043      18306          move.l    D3,A0
+0000631C  1010      18307          move.b    (A0),D0
+0000631E  0C00 002D 18308          cmp.b     #45,D0
+00006322  660E      18309          bne.s     doprint_67
+00006324  2043      18310          move.l    D3,A0
+00006326  5283      18311          addq.l    #1,D3
+00006328  2242      18312          move.l    D2,A1
+0000632A  5282      18313          addq.l    #1,D2
+0000632C  1290      18314          move.b    (A0),(A1)
+0000632E  5304      18315          subq.b    #1,D4
+00006330  6008      18316          bra.s     doprint_68
+                    18317   doprint_67:
+00006332  2042      18318          move.l    D2,A0
+00006334  5282      18319          addq.l    #1,D2
+00006336  10BC 0020 18320          move.b    #32,(A0)
+                    18321   doprint_68:
+0000633A  5287      18322          addq.l    #1,D7
+                    18323   doprint_65:
+0000633C  4A2E FFD0 18324          tst.b     -48(A6)
+00006340  6700 005A 18325          beq       doprint_77
+00006344  206E 000C 18326          move.l    12(A6),A0
+00006348  1010      18327          move.b    (A0),D0
+0000634A  4880      18328          ext.w     D0
+0000634C  48C0      18329          ext.l     D0
+0000634E  0C80 0000 18330          cmp.l     #111,D0
+00006352  006F      
+00006354  671A      18331          beq.s     doprint_73
+00006356  6E0C      18332          bgt.s     doprint_76
+00006358  0C80 0000 18333          cmp.l     #88,D0
+0000635C  0058      
+0000635E  6710      18334          beq.s     doprint_73
+00006360  6000 003A 18335          bra       doprint_77
+                    18336   doprint_76:
+00006364  0C80 0000 18337          cmp.l     #120,D0
+00006368  0078      
+0000636A  6704      18338          beq.s     doprint_73
+0000636C  6000 002E 18339          bra       doprint_77
+                    18340   doprint_73:
+00006370  2042      18341          move.l    D2,A0
+00006372  5282      18342          addq.l    #1,D2
+00006374  10BC 0030 18343          move.b    #48,(A0)
+00006378  5287      18344          addq.l    #1,D7
+0000637A  206E 000C 18345          move.l    12(A6),A0
+0000637E  1010      18346          move.b    (A0),D0
+00006380  0C00 0078 18347          cmp.b     #120,D0
+00006384  670C      18348          beq.s     doprint_79
+00006386  206E 000C 18349          move.l    12(A6),A0
+0000638A  1010      18350          move.b    (A0),D0
+0000638C  0C00 0058 18351          cmp.b     #88,D0
+00006390  660A      18352          bne.s     doprint_77
+                    18353   doprint_79:
+00006392  2042      18354          move.l    D2,A0
+00006394  5282      18355          addq.l    #1,D2
+00006396  10BC 0078 18356          move.b    #120,(A0)
+0000639A  5287      18357          addq.l    #1,D7
+                    18358   doprint_77:
+0000639C  2042      18359          move.l    D2,A0
+0000639E  4210      18360          clr.b     (A0)
+000063A0  206E 000C 18361          move.l    12(A6),A0
+000063A4  1010      18362          move.b    (A0),D0
+000063A6  4880      18363          ext.w     D0
+000063A8  48C0      18364          ext.l     D0
+000063AA  0C80 0000 18365          cmp.l     #105,D0
+000063AE  0069      
+000063B0  6700 0076 18366          beq       doprint_82
+000063B4  6E42      18367          bgt.s     doprint_93
+000063B6  0C80 0000 18368          cmp.l     #99,D0
+000063BA  0063      
+000063BC  6700 0084 18369          beq       doprint_96
+000063C0  6E1C      18370          bgt.s     doprint_94
+000063C2  0C80 0000 18371          cmp.l     #88,D0
+000063C6  0058      
+000063C8  6700 005E 18372          beq       doprint_82
+000063CC  6E00 0184 18373          bgt       doprint_80
+000063D0  0C80 0000 18374          cmp.l     #69,D0
+000063D4  0045      
+000063D6  6700 0050 18375          beq       doprint_82
+000063DA  6000 0176 18376          bra       doprint_80
+                    18377   doprint_94:
+000063DE  0C80 0000 18378          cmp.l     #101,D0
+000063E2  0065      
+000063E4  6700 0042 18379          beq       doprint_82
+000063E8  6E00 0168 18380          bgt       doprint_80
+000063EC  0C80 0000 18381          cmp.l     #100,D0
+000063F0  0064      
+000063F2  6734      18382          beq.s     doprint_82
+000063F4  6000 015C 18383          bra       doprint_80
+                    18384   doprint_93:
+000063F8  0C80 0000 18385          cmp.l     #117,D0
+000063FC  0075      
+000063FE  6728      18386          beq.s     doprint_82
+00006400  6E1A      18387          bgt.s     doprint_95
+00006402  0C80 0000 18388          cmp.l     #115,D0
+00006406  0073      
+00006408  6700 0038 18389          beq       doprint_96
+0000640C  6E00 0144 18390          bgt       doprint_80
+00006410  0C80 0000 18391          cmp.l     #111,D0
+00006414  006F      
+00006416  6710      18392          beq.s     doprint_82
+00006418  6000 0138 18393          bra       doprint_80
+                    18394   doprint_95:
+0000641C  0C80 0000 18395          cmp.l     #120,D0
+00006420  0078      
+00006422  6704      18396          beq.s     doprint_82
+00006424  6000 012C 18397          bra       doprint_80
+                    18398   doprint_82:
+00006428  4A2E FFD2 18399          tst.b     -46(A6)
+0000642C  6714      18400          beq.s     doprint_96
+0000642E  4A2E FFCD 18401          tst.b     -51(A6)
+00006432  660E      18402          bne.s     doprint_96
+00006434  200D      18403          move.l    A5,D0
+00006436  9087      18404          sub.l     D7,D0
+00006438  4884      18405          ext.w     D4
+0000643A  48C4      18406          ext.l     D4
+0000643C  9084      18407          sub.l     D4,D0
+0000643E  2D40 FFFC 18408          move.l    D0,-4(A6)
+                    18409   doprint_96:
+00006442  202E FFFC 18410          move.l    -4(A6),D0
+00006446  0C80 0000 18411          cmp.l     #0,D0
+0000644A  0000      
+0000644C  6C04      18412          bge.s     doprint_98
+0000644E  42AE FFFC 18413          clr.l     -4(A6)
+                    18414   doprint_98:
+00006452  4A2E FFCD 18415          tst.b     -51(A6)
+00006456  6600 0030 18416          bne       doprint_104
+0000645A  1004      18417          move.b    D4,D0
+0000645C  4880      18418          ext.w     D0
+0000645E  48C0      18419          ext.l     D0
+00006460  D0AE FFFC 18420          add.l     -4(A6),D0
+00006464  D087      18421          add.l     D7,D0
+00006466  1D40 FFD1 18422          move.b    D0,-47(A6)
+                    18423   doprint_102:
+0000646A  102E FFD1 18424          move.b    -47(A6),D0
+0000646E  4880      18425          ext.w     D0
+00006470  48C0      18426          ext.l     D0
+00006472  220D      18427          move.l    A5,D1
+00006474  534D      18428          subq.w    #1,A5
+00006476  B081      18429          cmp.l     D1,D0
+00006478  6C0E      18430          bge.s     doprint_104
+0000647A  4878 0020 18431          pea       32
+0000647E  2F0A      18432          move.l    A2,-(A7)
+00006480  4E93      18433          jsr       (A3)
+00006482  504F      18434          addq.w    #8,A7
+00006484  5286      18435          addq.l    #1,D6
+00006486  60E2      18436          bra       doprint_102
+                    18437   doprint_104:
+00006488  41EE FFD4 18438          lea       -44(A6),A0
+0000648C  2408      18439          move.l    A0,D2
+                    18440   doprint_105:
+0000648E  2042      18441          move.l    D2,A0
+00006490  4A10      18442          tst.b     (A0)
+00006492  6716      18443          beq.s     doprint_107
+00006494  2042      18444          move.l    D2,A0
+00006496  5282      18445          addq.l    #1,D2
+00006498  1210      18446          move.b    (A0),D1
+0000649A  4881      18447          ext.w     D1
+0000649C  48C1      18448          ext.l     D1
+0000649E  2F01      18449          move.l    D1,-(A7)
+000064A0  2F0A      18450          move.l    A2,-(A7)
+000064A2  4E93      18451          jsr       (A3)
+000064A4  504F      18452          addq.w    #8,A7
+000064A6  5286      18453          addq.l    #1,D6
+000064A8  60E4      18454          bra       doprint_105
+                    18455   doprint_107:
+000064AA  202E FFFC 18456          move.l    -4(A6),D0
+000064AE  1D40 FFD1 18457          move.b    D0,-47(A6)
+                    18458   doprint_108:
+000064B2  102E FFD1 18459          move.b    -47(A6),D0
+000064B6  532E FFD1 18460          subq.b    #1,-47(A6)
+000064BA  4A00      18461          tst.b     D0
+000064BC  670E      18462          beq.s     doprint_110
+000064BE  4878 0030 18463          pea       48
+000064C2  2F0A      18464          move.l    A2,-(A7)
+000064C4  4E93      18465          jsr       (A3)
+000064C6  504F      18466          addq.w    #8,A7
+000064C8  5286      18467          addq.l    #1,D6
+000064CA  60E6      18468          bra       doprint_108
+                    18469   doprint_110:
+000064CC  2043      18470          move.l    D3,A0
+000064CE  4A10      18471          tst.b     (A0)
+000064D0  6700 0048 18472          beq       doprint_113
+000064D4  206E 000C 18473          move.l    12(A6),A0
+000064D8  1010      18474          move.b    (A0),D0
+000064DA  4880      18475          ext.w     D0
+000064DC  48C0      18476          ext.l     D0
+000064DE  0C80 0000 18477          cmp.l     #115,D0
+000064E2  0073      
+000064E4  670C      18478          beq.s     doprint_116
+000064E6  6E18      18479          bgt.s     doprint_119
+000064E8  0C80 0000 18480          cmp.l     #99,D0
+000064EC  0063      
+000064EE  6702      18481          beq.s     doprint_116
+000064F0  600E      18482          bra.s     doprint_119
+                    18483   doprint_116:
+000064F2  2005      18484          move.l    D5,D0
+000064F4  5385      18485          subq.l    #1,D5
+000064F6  0C80 0000 18486          cmp.l     #0,D0
+000064FA  0000      
+000064FC  6E02      18487          bgt.s     doprint_119
+000064FE  6016      18488          bra.s     doprint_115
+                    18489   doprint_119:
+00006500  2043      18490          move.l    D3,A0
+00006502  5283      18491          addq.l    #1,D3
+00006504  1210      18492          move.b    (A0),D1
+00006506  4881      18493          ext.w     D1
+00006508  48C1      18494          ext.l     D1
+0000650A  2F01      18495          move.l    D1,-(A7)
+0000650C  2F0A      18496          move.l    A2,-(A7)
+0000650E  4E93      18497          jsr       (A3)
+00006510  504F      18498          addq.w    #8,A7
+00006512  5286      18499          addq.l    #1,D6
+00006514  6002      18500          bra.s     doprint_112
+                    18501   doprint_115:
+00006516  6002      18502          bra.s     doprint_113
+                    18503   doprint_112:
+00006518  60B2      18504          bra       doprint_110
+                    18505   doprint_113:
+0000651A  4A2E FFCD 18506          tst.b     -51(A6)
+0000651E  6700 0030 18507          beq       doprint_125
+00006522  1004      18508          move.b    D4,D0
+00006524  4880      18509          ext.w     D0
+00006526  48C0      18510          ext.l     D0
+00006528  D0AE FFFC 18511          add.l     -4(A6),D0
+0000652C  D087      18512          add.l     D7,D0
+0000652E  1D40 FFD1 18513          move.b    D0,-47(A6)
+                    18514   doprint_123:
+00006532  102E FFD1 18515          move.b    -47(A6),D0
+00006536  4880      18516          ext.w     D0
+00006538  48C0      18517          ext.l     D0
+0000653A  220D      18518          move.l    A5,D1
+0000653C  534D      18519          subq.w    #1,A5
+0000653E  B081      18520          cmp.l     D1,D0
+00006540  6C0E      18521          bge.s     doprint_125
+00006542  4878 0020 18522          pea       32
+00006546  2F0A      18523          move.l    A2,-(A7)
+00006548  4E93      18524          jsr       (A3)
+0000654A  504F      18525          addq.w    #8,A7
+0000654C  5386      18526          subq.l    #1,D6
+0000654E  60E2      18527          bra       doprint_123
+                    18528   doprint_125:
+00006550  6014      18529          bra.s     doprint_81
+                    18530   doprint_80:
+00006552  206E 000C 18531          move.l    12(A6),A0
+00006556  1210      18532          move.b    (A0),D1
+00006558  4881      18533          ext.w     D1
+0000655A  48C1      18534          ext.l     D1
+0000655C  2F01      18535          move.l    D1,-(A7)
+0000655E  2F0A      18536          move.l    A2,-(A7)
+00006560  4E93      18537          jsr       (A3)
+00006562  504F      18538          addq.w    #8,A7
+00006564  5286      18539          addq.l    #1,D6
+                    18540   doprint_81:
+00006566  52AE 000C 18541          addq.l    #1,12(A6)
+                    18542   doprint_2:
+0000656A  6000 FA0E 18543          bra       doprint_1
+                    18544   doprint_3:
+0000656E  4A92      18545          tst.l     (A2)
+00006570  6710      18546          beq.s     doprint_126
+00006572  4201      18547          clr.b     D1
+00006574  C2BC 0000 18548          and.l     #255,D1
+00006578  00FF      
+0000657A  2F01      18549          move.l    D1,-(A7)
+0000657C  2F0A      18550          move.l    A2,-(A7)
+0000657E  4E93      18551          jsr       (A3)
+00006580  504F      18552          addq.w    #8,A7
+                    18553   doprint_126:
+00006582  2006      18554          move.l    D6,D0
+00006584  4CDF 3CFC 18555          movem.l   (A7)+,D2/D3/D4/D5/D6/D7/A2/A3/A4/A5
+00006588  4E5E      18556          unlk      A6
+0000658A  4E75      18557          rts
+                    18558   @itoa_convert:
+0000658C  4E56 0000 18559          link      A6,#0
+00006590  48E7 3C00 18560          movem.l   D2/D3/D4/D5,-(A7)
+00006594  242E 0008 18561          move.l    8(A6),D2
+00006598  262E 0010 18562          move.l    16(A6),D3
+0000659C  2A2E 000C 18563          move.l    12(A6),D5
+000065A0  2F05      18564          move.l    D5,-(A7)
+000065A2  2F03      18565          move.l    D3,-(A7)
+000065A4  4EB8 5DAE 18566          jsr       ULDIV
+000065A8  202F 0004 18567          move.l    4(A7),D0
+000065AC  504F      18568          addq.w    #8,A7
+000065AE  2800      18569          move.l    D0,D4
+000065B0  BA83      18570          cmp.l     D3,D5
+000065B2  651C      18571          blo.s     @itoa_convert_1
+000065B4  2F03      18572          move.l    D3,-(A7)
+000065B6  2F05      18573          move.l    D5,-(A7)
+000065B8  2F03      18574          move.l    D3,-(A7)
+000065BA  4EB8 5DAE 18575          jsr       ULDIV
+000065BE  2217      18576          move.l    (A7),D1
+000065C0  504F      18577          addq.w    #8,A7
+000065C2  2F01      18578          move.l    D1,-(A7)
+000065C4  2F02      18579          move.l    D2,-(A7)
+000065C6  4EB8 658C 18580          jsr       @itoa_convert
+000065CA  DEFC 000C 18581          add.w     #12,A7
+000065CE  2400      18582          move.l    D0,D2
+                    18583   @itoa_convert_1:
+000065D0  0C84 0000 18584          cmp.l     #9,D4
+000065D4  0009      
+000065D6  6E0E      18585          bgt.s     @itoa_convert_3
+000065D8  2004      18586          move.l    D4,D0
+000065DA  7230      18587          moveq     #48,D1
+000065DC  C2BC 0000 18588          and.l     #255,D1
+000065E0  00FF      
+000065E2  D081      18589          add.l     D1,D0
+000065E4  6012      18590          bra.s     @itoa_convert_4
+                    18591   @itoa_convert_3:
+000065E6  2004      18592          move.l    D4,D0
+000065E8  7261      18593          moveq     #97,D1
+000065EA  C2BC 0000 18594          and.l     #255,D1
+000065EE  00FF      
+000065F0  D081      18595          add.l     D1,D0
+000065F2  0480 0000 18596          sub.l     #10,D0
+000065F6  000A      
+                    18597   @itoa_convert_4:
+000065F8  2042      18598          move.l    D2,A0
+000065FA  1080      18599          move.b    D0,(A0)
+000065FC  2002      18600          move.l    D2,D0
+000065FE  5280      18601          addq.l    #1,D0
+00006600  4CDF 003C 18602          movem.l   (A7)+,D2/D3/D4/D5
+00006604  4E5E      18603          unlk      A6
+00006606  4E75      18604          rts
+                    18605   _ltoa:
+00006608  4E56 0000 18606          link      A6,#0
+0000660C  48E7 3C00 18607          movem.l   D2/D3/D4/D5,-(A7)
+00006610  242E 0008 18608          move.l    8(A6),D2
+00006614  262E 000C 18609          move.l    12(A6),D3
+00006618  2A2E 0010 18610          move.l    16(A6),D5
+0000661C  2803      18611          move.l    D3,D4
+0000661E  0C85 0000 18612          cmp.l     #2,D5
+00006622  0002      
+00006624  6D08      18613          blt.s     ltoa_3
+00006626  0C85 0000 18614          cmp.l     #36,D5
+0000662A  0024      
+0000662C  6F06      18615          ble.s     ltoa_1
+                    18616   ltoa_3:
+0000662E  2003      18617          move.l    D3,D0
+00006630  6000 0054 18618          bra       ltoa_4
+                    18619   ltoa_1:
+00006634  0C85 0000 18620          cmp.l     #10,D5
+00006638  000A      
+0000663A  6600 0034 18621          bne       ltoa_5
+0000663E  0C82 0000 18622          cmp.l     #0,D2
+00006642  0000      
+00006644  6C2A      18623          bge.s     ltoa_5
+00006646  2002      18624          move.l    D2,D0
+00006648  4480      18625          neg.l     D0
+0000664A  2400      18626          move.l    D0,D2
+0000664C  0C82 0000 18627          cmp.l     #0,D2
+00006650  0000      
+00006652  6C14      18628          bge.s     ltoa_7
+00006654  4879 0000 18629          pea       @itoa_1.L
+00006658  690C      
+0000665A  2F03      18630          move.l    D3,-(A7)
+0000665C  4EB9 0000 18631          jsr       _strcpy
+00006660  674A      
+00006662  504F      18632          addq.w    #8,A7
+00006664  2003      18633          move.l    D3,D0
+00006666  601E      18634          bra.s     ltoa_4
+                    18635   ltoa_7:
+00006668  2044      18636          move.l    D4,A0
+0000666A  5284      18637          addq.l    #1,D4
+0000666C  10BC 002D 18638          move.b    #45,(A0)
+                    18639   ltoa_5:
+00006670  2F05      18640          move.l    D5,-(A7)
+00006672  2F02      18641          move.l    D2,-(A7)
+00006674  2F04      18642          move.l    D4,-(A7)
+00006676  4EB8 658C 18643          jsr       @itoa_convert
+0000667A  DEFC 000C 18644          add.w     #12,A7
+0000667E  2800      18645          move.l    D0,D4
+00006680  2044      18646          move.l    D4,A0
+00006682  4210      18647          clr.b     (A0)
+00006684  2003      18648          move.l    D3,D0
+                    18649   ltoa_4:
+00006686  4CDF 003C 18650          movem.l   (A7)+,D2/D3/D4/D5
+0000668A  4E5E      18651          unlk      A6
+0000668C  4E75      18652          rts
+                    18653   _ultoa:
+0000668E  4E56 0000 18654          link      A6,#0
+00006692  48E7 3800 18655          movem.l   D2/D3/D4,-(A7)
+00006696  262E 0010 18656          move.l    16(A6),D3
+0000669A  282E 000C 18657          move.l    12(A6),D4
+0000669E  2404      18658          move.l    D4,D2
+000066A0  0C83 0000 18659          cmp.l     #2,D3
+000066A4  0002      
+000066A6  6D08      18660          blt.s     ultoa_3
+000066A8  0C83 0000 18661          cmp.l     #36,D3
+000066AC  0024      
+000066AE  6F04      18662          ble.s     ultoa_1
+                    18663   ultoa_3:
+000066B0  2004      18664          move.l    D4,D0
+000066B2  6018      18665          bra.s     ultoa_4
+                    18666   ultoa_1:
+000066B4  2F03      18667          move.l    D3,-(A7)
+000066B6  2F2E 0008 18668          move.l    8(A6),-(A7)
+000066BA  2F02      18669          move.l    D2,-(A7)
+000066BC  4EB8 658C 18670          jsr       @itoa_convert
+000066C0  DEFC 000C 18671          add.w     #12,A7
+000066C4  2400      18672          move.l    D0,D2
+000066C6  2042      18673          move.l    D2,A0
+000066C8  4210      18674          clr.b     (A0)
+000066CA  2004      18675          move.l    D4,D0
+                    18676   ultoa_4:
+000066CC  4CDF 001C 18677          movem.l   (A7)+,D2/D3/D4
+000066D0  4E5E      18678          unlk      A6
+000066D2  4E75      18679          rts
+                    18680   _itoa:
+000066D4  4E56 0000 18681          link      A6,#0
+000066D8  2F2E 0010 18682          move.l    16(A6),-(A7)
+000066DC  2F2E 000C 18683          move.l    12(A6),-(A7)
+000066E0  2F2E 0008 18684          move.l    8(A6),-(A7)
+000066E4  4EB8 6608 18685          jsr       _ltoa
+000066E8  DEFC 000C 18686          add.w     #12,A7
+000066EC  4E5E      18687          unlk      A6
+000066EE  4E75      18688          rts
+                    18689   _strlen:
+000066F0  206F 0004 18690          move.l    (4,A7),A0
+000066F4  2248      18691          move.l    A0,A1
+                    18692   strlen_1:
+000066F6  4A19      18693          tst.b     (A1)+
+000066F8  66FC      18694          bne       strlen_1
+000066FA  2009      18695          move.l    A1,D0
+000066FC  9088      18696          sub.l     A0,D0
+000066FE  5380      18697          subq.l    #1,D0
+00006700  4E75      18698          rts
+                    18699   _putch:
+00006702  4E56 0000 18700          link      A6,#0
+00006706  2F02      18701          move.l    D2,-(A7)
+00006708  242E 0008 18702          move.l    8(A6),D2
+0000670C  0C82 0000 18703          cmp.l     #10,D2
+00006710  000A      
+00006712  660A      18704          bne.s     putch_1
+00006714  4878 000D 18705          pea       13
+00006718  4EB8 5A46 18706          jsr       __putch
+0000671C  584F      18707          addq.w    #4,A7
+                    18708   putch_1:
+0000671E  2F02      18709          move.l    D2,-(A7)
+00006720  4EB8 5A46 18710          jsr       __putch
+00006724  584F      18711          addq.w    #4,A7
+00006726  2002      18712          move.l    D2,D0
+00006728  241F      18713          move.l    (A7)+,D2
+0000672A  4E5E      18714          unlk      A6
+0000672C  4E75      18715          rts
+                    18716   _toupper:
+0000672E  202F 0004 18717          move.l    4(A7),D0
+00006732  0C80 0000 18718          cmp.l     #'a',D0
+00006736  0061      
+00006738  6D0E      18719          blt.s     toupper_1
+0000673A  0C80 0000 18720          cmp.l     #'z',D0
+0000673E  007A      
+00006740  6E06      18721          bgt.s     toupper_1
+00006742  0480 0000 18722          sub.l     #$20,D0
+00006746  0020      
+                    18723   toupper_1:
+00006748  4E75      18724          rts
+                    18725   _strcpy:
+0000674A  206F 0004 18726          move.l    (4,A7),A0
+0000674E  226F 0008 18727          move.l    (8,A7),A1
+00006752  2008      18728          move.l    A0,D0
+                    18729   strcpy_1:
+00006754  10D9      18730          move.b    (A1)+,(A0)+
+00006756  66FC      18731          bne.s     strcpy_1
+00006758  4E75      18732          rts
+                    18733          section   const
+          0000 675A 18734   const      equ         *				; consts start whever the linker groups them, after the code section (but still in rom)
+                    18735   
+                    18736   @ucos_ii_1:
+0000675A  3F00      18737          dc.b      63,0
+                    18738   @ucos_ii_2:
+0000675C  7543 2F4F 18739          dc.b      117,67,47,79,83,45,73,73,32,73,100,108,101,0
+00006760  532D 4949 
+00006764  2049 646C 
+00006768  6500      
+                    18740   @ucos_ii_3:
+0000676A  7543 2F4F 18741          dc.b      117,67,47,79,83,45,73,73,32,83,116,97,116,0
+0000676E  532D 4949 
+00006772  2053 7461 
+00006776  7400      
+                    18742   @ucos_ii_4:
+00006778  7543 2F4F 18743          dc.b      117,67,47,79,83,45,73,73,32,84,109,114,76,111
+0000677C  532D 4949 
+00006780  2054 6D72 
+00006784  4C6F      
+00006786  636B 00   18744          dc.b      99,107,0
+                    18745   @ucos_ii_5:
+0000678A  7543 2F4F 18746          dc.b      117,67,47,79,83,45,73,73,32,84,109,114,83,105
+0000678E  532D 4949 
+00006792  2054 6D72 
+00006796  5369      
+00006798  676E 616C 18747          dc.b      103,110,97,108,0
+0000679C  00        
+                    18748   @ucos_ii_6:
+0000679E  7543 2F4F 18749          dc.b      117,67,47,79,83,45,73,73,32,84,109,114,0
+000067A2  532D 4949 
+000067A6  2054 6D72 
+000067AA  00        
+                    18750   _OSUnMapTbl:
+000067AC  0000 0100 18751          dc.b      0,0,1,0,2,0,1,0,3,0,1,0,2,0,1,0,4,0,1,0,2,0
+000067B0  0200 0100 
+000067B4  0300 0100 
+000067B8  0200 0100 
+000067BC  0400 0100 
+000067C0  0200      
+000067C2  0100 0300 18752          dc.b      1,0,3,0,1,0,2,0,1,0,5,0,1,0,2,0,1,0,3,0,1,0
+000067C6  0100 0200 
+000067CA  0100 0500 
+000067CE  0100 0200 
+000067D2  0100 0300 
+000067D6  0100      
+000067D8  0200 0100 18753          dc.b      2,0,1,0,4,0,1,0,2,0,1,0,3,0,1,0,2,0,1,0,6,0
+000067DC  0400 0100 
+000067E0  0200 0100 
+000067E4  0300 0100 
+000067E8  0200 0100 
+000067EC  0600      
+000067EE  0100 0200 18754          dc.b      1,0,2,0,1,0,3,0,1,0,2,0,1,0,4,0,1,0,2,0,1,0
+000067F2  0100 0300 
+000067F6  0100 0200 
+000067FA  0100 0400 
+000067FE  0100 0200 
+00006802  0100      
+00006804  0300 0100 18755          dc.b      3,0,1,0,2,0,1,0,5,0,1,0,2,0,1,0,3,0,1,0,2,0
+00006808  0200 0100 
+0000680C  0500 0100 
+00006810  0200 0100 
+00006814  0300 0100 
+00006818  0200      
+0000681A  0100 0400 18756          dc.b      1,0,4,0,1,0,2,0,1,0,3,0,1,0,2,0,1,0,7,0,1,0
+0000681E  0100 0200 
+00006822  0100 0300 
+00006826  0100 0200 
+0000682A  0100 0700 
+0000682E  0100      
+00006830  0200 0100 18757          dc.b      2,0,1,0,3,0,1,0,2,0,1,0,4,0,1,0,2,0,1,0,3,0
+00006834  0300 0100 
+00006838  0200 0100 
+0000683C  0400 0100 
+00006840  0200 0100 
+00006844  0300      
+00006846  0100 0200 18758          dc.b      1,0,2,0,1,0,5,0,1,0,2,0,1,0,3,0,1,0,2,0,1,0
+0000684A  0100 0500 
+0000684E  0100 0200 
+00006852  0100 0300 
+00006856  0100 0200 
+0000685A  0100      
+0000685C  0400 0100 18759          dc.b      4,0,1,0,2,0,1,0,3,0,1,0,2,0,1,0,6,0,1,0,2,0
+00006860  0200 0100 
+00006864  0300 0100 
+00006868  0200 0100 
+0000686C  0600 0100 
+00006870  0200      
+00006872  0100 0300 18760          dc.b      1,0,3,0,1,0,2,0,1,0,4,0,1,0,2,0,1,0,3,0,1,0
+00006876  0100 0200 
+0000687A  0100 0400 
+0000687E  0100 0200 
+00006882  0100 0300 
+00006886  0100      
+00006888  0200 0100 18761          dc.b      2,0,1,0,5,0,1,0,2,0,1,0,3,0,1,0,2,0,1,0,4,0
+0000688C  0500 0100 
+00006890  0200 0100 
+00006894  0300 0100 
+00006898  0200 0100 
+0000689C  0400      
+0000689E  0100 0200 18762          dc.b      1,0,2,0,1,0,3,0,1,0,2,0,1,0
+000068A2  0100 0300 
+000068A6  0100 0200 
+000068AA  0100      
+                    18763   @6a-mul~1_1:
+********  **** ****  Error: Syntax error
+000068AC  5468 6973 18764          dc.b      84,104,105,115,32,105,115,32,84,97,115,107,32
+000068B0  2069 7320 
+000068B4  5461 736B 
+000068B8  20        
+000068B9  2331 0A00 18765          dc.b      35,49,10,0
+                    18766   @6a-mul~1_2:
+********  **** ****  Error: Syntax error
+000068BE  2E2E 2E2E 18767          dc.b      46,46,46,46,84,104,105,115,32,105,115,32,84
+000068C2  5468 6973 
+000068C6  2069 7320 
+000068CA  54        
+000068CB  6173 6B20 18768          dc.b      97,115,107,32,35,50,10,0
+000068CF  2332 0A00 
+                    18769   @6a-mul~1_3:
+********  **** ****  Error: Syntax error
+000068D4  2E2E 2E2E 18770          dc.b      46,46,46,46,46,46,46,46,84,104,105,115,32,105
+000068D8  2E2E 2E2E 
+000068DC  5468 6973 
+000068E0  2069      
+000068E2  7320 5461 18771          dc.b      115,32,84,97,115,107,32,35,51,10,0
+000068E6  736B 2023 
+000068EA  330A 00   
+                    18772   @6a-mul~1_4:
+********  **** ****  Error: Syntax error
+000068EE  2E2E 2E2E 18773          dc.b      46,46,46,46,46,46,46,46,46,46,46,46,84,104,105
+000068F2  2E2E 2E2E 
+000068F6  2E2E 2E2E 
+000068FA  5468 69   
+000068FD  7320 6973 18774          dc.b      115,32,105,115,32,84,97,115,107,32,35,52,10
+00006901  2054 6173 
+00006905  6B20 2334 
+00006909  0A        
+0000690A  00        18775          dc.b      0
+                    18776   @itoa_1:
+0000690C  2D32 3134 18777          dc.b      45,50,49,52,55,52,56,51,54,52,56,0
+00006910  3734 3833 
+00006914  3634 3800 
+                    18778   __ctype:
+00006918  0040 4040 18779          dc.b      0,64,64,64,64,64,64,64,64,64,80,80,80,80,80
+0000691C  4040 4040 
+00006920  4040 5050 
+00006924  5050 50   
+00006927  4040 4040 18780          dc.b      64,64,64,64,64,64,64,64,64,64,64,64,64,64,64
+0000692B  4040 4040 
+0000692F  4040 4040 
+00006933  4040 40   
+00006936  4040 40D0 18781          dc.b      64,64,64,208,160,160,160,160,160,160,160,160
+0000693A  A0A0 A0A0 
+0000693E  A0A0 A0A0 
+00006942  A0A0 A0A0 18782          dc.b      160,160,160,160,160,160,160,140,140,140,140
+00006946  A0A0 A08C 
+0000694A  8C8C 8C   
+0000694D  8C8C 8C8C 18783          dc.b      140,140,140,140,140,140,160,160,160,160,160
+00006951  8C8C A0A0 
+00006955  A0A0 A0   
+00006958  A0A0 8A8A 18784          dc.b      160,160,138,138,138,138,138,138,130,130,130
+0000695C  8A8A 8A8A 
+00006960  8282 82   
+00006963  8282 8282 18785          dc.b      130,130,130,130,130,130,130,130,130,130,130
+00006967  8282 8282 
+0000696B  8282 82   
+0000696E  8282 8282 18786          dc.b      130,130,130,130,130,130,160,160,160,160,160
+00006972  8282 A0A0 
+00006976  A0A0 A0   
+00006979  A089 8989 18787          dc.b      160,137,137,137,137,137,137,129,129,129,129
+0000697D  8989 8981 
+00006981  8181 81   
+00006984  8181 8181 18788          dc.b      129,129,129,129,129,129,129,129,129,129,129
+00006988  8181 8181 
+0000698C  8181 81   
+0000698F  8181 8181 18789          dc.b      129,129,129,129,129,160,160,160,160,64,0,0,0
+00006993  81A0 A0A0 
+00006997  A040 0000 
+0000699B  00        
+0000699C  0000 0000 18790          dc.b      0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+000069A0  0000 0000 
+000069A4  0000 0000 
+000069A8  0000 0000 
+000069AC  0000 0000 
+000069B0  0000      
+000069B2  0000 0000 18791          dc.b      0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+000069B6  0000 0000 
+000069BA  0000 0000 
+000069BE  0000 0000 
+000069C2  0000 0000 
+000069C6  0000      
+000069C8  0000 0000 18792          dc.b      0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+000069CC  0000 0000 
+000069D0  0000 0000 
+000069D4  0000 0000 
+000069D8  0000 0000 
+000069DC  0000      
+000069DE  0000 0000 18793          dc.b      0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+000069E2  0000 0000 
+000069E6  0000 0000 
+000069EA  0000 0000 
+000069EE  0000 0000 
+000069F2  0000      
+000069F4  0000 0000 18794          dc.b      0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+000069F8  0000 0000 
+000069FC  0000 0000 
+00006A00  0000 0000 
+00006A04  0000 0000 
+00006A08  0000      
+00006A0A  0000 0000 18795          dc.b      0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+00006A0E  0000 0000 
+00006A12  0000 0000 
+00006A16  0000 00   
+                    18796          section   data
+          0000 6A1A 18797   end_ROM    equ         *				; end of rom is wherever the last code/constant appears (* means here)
+                    18798   
+08000000            18799              org         RAM				; starting at address $08000000
+          0800 0000 18800   begin_RAM  equ         *				; begin ram starts here
+          0800 0000 18801   data       equ         *				; data starts here also
+                    18802   
+                    18803          section   bss
+          0800 0000 18804   bss        equ         *
+                    18805   
+                    18806   ;           org         $0B000000               Ram based vector table must be stored here otherwise InstallException Handler will not work
+                    18807   
+                    18808   *********************************************************************************************************
+                    18809   * Build a ram based vector table for interrupts so we can install our own Exception Handlers in C code at run time
+                    18810   * install the exception handler using the C function InstallExceptionHandler()
+                    18811   *********************************************************************************************************
+                    18812   
+08000000            18813   VInitialSP       ds.l    1      dummy as we can't really install a handler for this
+08000004            18814   VInitialPC       ds.l    1      dummy as we can't reallin install a handler for this
+08000008            18815   VBusError        ds.l    1      storage for address of Bus Error Handler
+0800000C            18816   VAddressError    ds.l    1      storage for address of Address Error Handler
+08000010            18817   VIllegalInstr    ds.l    1      storage for address of Illegal Instruction handler
+08000014            18818   VDividebyZero    ds.l    1      storage for address of divide by zero handler
+08000018            18819   VCheck           ds.l    1      ditto
+0800001C            18820   VTrapV           ds.l    1      ditto
+08000020            18821   VPrivilege       ds.l    1      ditto
+08000024            18822   VTrace           ds.l    1
+08000028            18823   VLine1010emul    ds.l    1
+0800002C            18824   VLine1111emul    ds.l    1
+08000030            18825   VUnassigned1     ds.l    1
+08000034            18826   VUnassigned2     ds.l    1
+08000038            18827   VUnassigned3     ds.l    1
+0800003C            18828   VUninit_IRQ      ds.l    1
+08000040            18829   VUnassigned4     ds.l    1
+08000044            18830   VUnassigned5     ds.l    1
+08000048            18831   VUnassigned6     ds.l    1
+0800004C            18832   VUnassigned7     ds.l    1
+08000050            18833   VUnassigned8     ds.l    1
+08000054            18834   VUnassigned9     ds.l    1
+08000058            18835   VUnassigned10    ds.l    1
+0800005C            18836   VUnassigned11    ds.l    1
+08000060            18837   VSpuriousIRQ     ds.l    1
+                    18838   
+                    18839   * Interrupt handlers Vector 25-31
+08000064            18840   VL1IRQ           ds.l    1       storage for 4 byte address of IRQ handler in your C program - install the handler using the C function InstallExceptionHandler()
+08000068            18841   VL2IRQ           ds.l    1       storage for 4 byte address of IRQ handler in your C program - install the handler using the C function InstallExceptionHandler()
+0800006C            18842   VL3IRQ           ds.l    1       storage for 4 byte address of IRQ handler in your C program - install the handler using the C function InstallExceptionHandler()
+08000070            18843   VL4IRQ           ds.l    1       storage for 4 byte address of IRQ handler in your C program - install the handler using the C function InstallExceptionHandler()
+08000074            18844   VL5IRQ           ds.l    1       storage for 4 byte address of IRQ handler in your C program - install the handler using the C function InstallExceptionHandler()
+08000078            18845   VL6IRQ           ds.l    1       storage for 4 byte address of IRQ handler in your C program - install the handler using the C function InstallExceptionHandler()
+0800007C            18846   VL7IRQ           ds.l    1       storage for 4 byte address of IRQ handler in your C program - install the handler using the C function InstallExceptionHandler()
+                    18847   
+                    18848   * Trap Handler vectors 32-47
+08000080            18849   VTrap0           ds.l   1        storage for 4 byte address of TRAP handler in your C program - install the handler using the C function InstallExceptionHandler()
+08000084            18850   VTrap1           ds.l   1        storage for 4 byte address of TRAP handler in your C program - install the handler using the C function InstallExceptionHandler()
+08000088            18851   VTrap2           ds.l   1        storage for 4 byte address of TRAP handler in your C program - install the handler using the C function InstallExceptionHandler()
+0800008C            18852   VTrap3           ds.l   1        storage for 4 byte address of TRAP handler in your C program - install the handler using the C function InstallExceptionHandler()
+08000090            18853   VTrap4           ds.l   1        storage for 4 byte address of TRAP handler in your C program - install the handler using the C function InstallExceptionHandler()
+08000094            18854   VTrap5           ds.l   1        storage for 4 byte address of TRAP handler in your C program - install the handler using the C function InstallExceptionHandler()
+08000098            18855   VTrap6           ds.l   1        storage for 4 byte address of TRAP handler in your C program - install the handler using the C function InstallExceptionHandler()
+0800009C            18856   VTrap7           ds.l   1        storage for 4 byte address of TRAP handler in your C program - install the handler using the C function InstallExceptionHandler()
+080000A0            18857   VTrap8           ds.l   1        storage for 4 byte address of TRAP handler in your C program - install the handler using the C function InstallExceptionHandler()
+080000A4            18858   VTrap9           ds.l   1        storage for 4 byte address of TRAP handler in your C program - install the handler using the C function InstallExceptionHandler()
+080000A8            18859   VTrap10          ds.l   1        storage for 4 byte address of TRAP handler in your C program - install the handler using the C function InstallExceptionHandler()
+080000AC            18860   VTrap11          ds.l   1        storage for 4 byte address of TRAP handler in your C program - install the handler using the C function InstallExceptionHandler()
+080000B0            18861   VTrap12          ds.l   1        storage for 4 byte address of TRAP handler in your C program - install the handler using the C function InstallExceptionHandler()
+080000B4            18862   VTrap13          ds.l   1        storage for 4 byte address of TRAP handler in your C program - install the handler using the C function InstallExceptionHandler()
+080000B8            18863   VTrap14          ds.l   1        storage for 4 byte address of TRAP handler in your C program - install the handler using the C function InstallExceptionHandler()
+080000BC            18864   VTrap15          ds.l   1        storage for 4 byte address of TRAP handler in your C program - install the handler using the C function InstallExceptionHandler()
+                    18865   
+                    18866   __ungetbuf:                            ; ungetbuffer for stdio functions
+080000C0            18867              ds.l        1
+                    18868   __timezone:                            ; difference, in seconds, between local time and UTC
+080000C4            18869              ds.l        1
+                    18870   __daylight:                            ; flag, '1' for daylight saving time, '0' for standard time.
+080000C8            18871              ds.l        1
+                    18872   __romsize:                             ; size of ROM used by program
+080000CC            18873              ds.l        1
+                    18874   __ramsize:                             ; size of RAM used by program
+080000D0            18875              ds.l        1
+                    18876   
+                    18877   _OSTmrTickCtr:
+080000D4            18878          ds.b      1
+                    18879   _OSCtxSwCtr:
+080000D6            18880          ds.b      4
+                    18881   _OSEventFreeList:
+080000DA            18882          ds.b      4
+                    18883   _OSEventTbl:
+080000DE            18884          ds.b      220
+                    18885   _OSFlagTbl:
+080001BA            18886          ds.b      60
+                    18887   _OSFlagFreeList:
+080001F6            18888          ds.b      4
+                    18889   _OSCPUUsage:
+080001FA            18890          ds.b      1
+                    18891   _OSIdleCtrMax:
+080001FC            18892          ds.b      4
+                    18893   _OSIdleCtrRun:
+08000200            18894          ds.b      4
+                    18895   _OSStatRdy:
+08000204            18896          ds.b      1
+                    18897   _OSTaskStatStk:
+08000206            18898          ds.b      256
+                    18899   _OSIntNesting:
+08000306            18900          ds.b      1
+                    18901   _OSLockNesting:
+08000308            18902          ds.b      1
+                    18903   _OSPrioCur:
+0800030A            18904          ds.b      1
+                    18905   _OSPrioHighRdy:
+0800030C            18906          ds.b      1
+                    18907   _OSRdyGrp:
+0800030E            18908          ds.b      1
+                    18909   _OSRdyTbl:
+08000310            18910          ds.b      8
+                    18911   _OSRunning:
+08000318            18912          ds.b      1
+                    18913   _OSTaskCtr:
+0800031A            18914          ds.b      1
+                    18915   _OSIdleCtr:
+0800031C            18916          ds.b      4
+                    18917   _OSTaskIdleStk:
+08000320            18918          ds.b      256
+                    18919   _OSTCBCur:
+08000420            18920          ds.b      4
+                    18921   _OSTCBFreeList:
+08000424            18922          ds.b      4
+                    18923   _OSTCBHighRdy:
+08000428            18924          ds.b      4
+                    18925   _OSTCBList:
+0800042C            18926          ds.b      4
+                    18927   _OSTCBPrioTbl:
+08000430            18928          ds.b      256
+                    18929   _OSTCBTbl:
+08000530            18930          ds.b      1892
+                    18931   _OSMemFreeList:
+08000C94            18932          ds.b      4
+                    18933   _OSMemTbl:
+08000C98            18934          ds.b      120
+                    18935   _OSQFreeList:
+08000D10            18936          ds.b      4
+                    18937   _OSQTbl:
+08000D14            18938          ds.b      96
+                    18939   _OSTaskRegNextAvailID:
+08000D74            18940          ds.b      1
+                    18941   _OSTime:
+08000D76            18942          ds.b      4
+                    18943   _OSTmrFree:
+08000D7A            18944          ds.b      2
+                    18945   _OSTmrUsed:
+08000D7C            18946          ds.b      2
+                    18947   _OSTmrTime:
+08000D7E            18948          ds.b      4
+                    18949   _OSTmrSem:
+08000D82            18950          ds.b      4
+                    18951   _OSTmrSemSignal:
+08000D86            18952          ds.b      4
+                    18953   _OSTmrTbl:
+08000D8A            18954          ds.b      576
+                    18955   _OSTmrFreeList:
+08000FCA            18956          ds.b      4
+                    18957   _OSTmrTaskStk:
+08000FCE            18958          ds.b      256
+                    18959   _OSTmrWheelTbl:
+080010CE            18960          ds.b      32
+                    18961   _Task1Stk:
+080010EE            18962          ds.b      512
+                    18963   _Task2Stk:
+080012EE            18964          ds.b      512
+                    18965   _Task3Stk:
+080014EE            18966          ds.b      512
+                    18967   _Task4Stk:
+080016EE            18968          ds.b      512
+                    18969          section   heap
+          0800 18EE 18970   end_RAM    equ         *				; wherever the program variables end, is the start of the heap
+          0800 18EE 18971   heap       equ         *
+                    18972   
+          0801 0000 18973   __stack    equ         RAM+RAMsize     ; stack for main function, no longer needed after OSStart() is called
           0000 0000
 
-Assembly errors: 0
+Assembly errors: 8
